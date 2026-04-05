@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREORDER - Nadchodzące Premiery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00aaff;
+            --background-color: #0d1117;
+            --card-background: #161b22;
+            --text-color: #e0e0e0;
+            --header-color: #ffffff;
+            --border-color: #30363d;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            background-color: var(--background-color); 
+            color: var(--text-color); 
+            background-repeat: no-repeat;
+            background-position: center center; 
+            background-attachment: fixed; 
+            background-size: cover; 
+            min-height: 100vh;
+        }
+
+        /* Warstwa przyciemniająca całe tło strony */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: -1;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 1.5rem 0; 
+            border-bottom: 1px solid var(--border-color); 
+        }
+
+        .logo { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: var(--header-color); 
+            text-shadow: 0 0 12px var(--primary-color); 
+            letter-spacing: 2px;
+        }
+
+        /* POPRAWIONA SEKCJA NAGŁÓWKA Z TŁEM */
+        .header-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin: 3rem auto;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.6); /* Półprzezroczyste czarne tło */
+            backdrop-filter: blur(10px);    /* Rozmycie tła za napisem */
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;            /* Zaokrąglone rogi */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .main-headline {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--header-color);
+            margin: 0;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .sub-headline {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-top: 1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .games-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 2.5rem; 
+            padding-bottom: 4rem; 
+        }
+
+        .game-card {
+            position: relative;
+            height: 480px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            background-color: var(--card-background);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border-color);
+        }
+
+        .game-card:hover {
+            box-shadow: 0 0 40px rgba(0, 170, 255, 0.3);
+            border: 1px solid var(--primary-color);
+            transform: translateY(-8px);
+        }
+
+        .card-bg-image { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.5); 
+            z-index: 0; 
+            transition: transform 0.6s ease;
+        }
+        
+        .game-card:hover .card-bg-image {
+            transform: scale(1.1);
+        }
+
+        .card-content { 
+            position: relative; 
+            z-index: 1; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%; 
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(13,17,23,0.9) 20%, transparent 100%);
+        }
+
+        .card-platform { 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            color: white; 
+            background: var(--primary-color);
+            align-self: flex-start;
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .card-title { 
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            color: white; 
+            margin: 0; 
+            line-height: 1; 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .card-info-group {
+            margin-top: 10px;
+        }
+
+        .card-date { 
+            font-size: 0.95rem; 
+            font-weight: 400; 
+            color: rgba(255,255,255,0.7); 
+            margin: 0;
+        }
+
+        .card-countdown { 
+            font-size: 1rem; 
+            font-weight: 700; 
+            color: white; 
+            margin-top: 4px;
+            display: block;
+        }
+
+        .card-countdown .days-val { 
+            color: var(--primary-color); 
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .card-spacer { flex-grow: 1; }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding-top: 1rem;
+        }
+
+        .card-price { 
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            color: var(--primary-color); 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .card-button { 
+            background-color: #ff4444; 
+            border: none; 
+            color: white; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            cursor: pointer; 
+            padding: 12px 16px; 
+            border-radius: 12px; 
+            transition: all 0.2s; 
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            text-transform: uppercase;
+        }
+
+        .card-button:hover { 
+            transform: scale(1.05); 
+            background-color: #ff0000;
+        }
+        
+        #loader { font-size: 1.5rem; text-align: center; padding: 4rem; color: var(--primary-color); }
+
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            backdrop-filter: blur(8px); 
+            background-color: rgba(0,0,0,0.8); 
+        }
+
+        .modal-content { 
+            background-color: var(--card-background); 
+            margin: 5% auto; 
+            padding: 2.5rem; 
+            border-radius: 16px; 
+            max-width: 450px; 
+            border: 1px solid var(--primary-color); 
+            position: relative;
+        }
+
+        .modal-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 2rem; 
+        }
+
+        .modal-header h2 { margin: 0; font-size: 1.4rem; color: var(--header-color); }
+        .close-btn { color: #aaa; font-size: 32px; cursor: pointer; line-height: 1; }
+        
+        #reservation-form label { display: block; margin-bottom: 0.4rem; font-size: 0.9rem; font-weight: 600; color: #ccc; }
+        #reservation-form input { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 1.2rem; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+            background-color: #2a3038; 
+            color: white; 
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        #submit-reservation { 
+            width: 100%; 
+            padding: 1rem; 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            border: none; 
+            background-color: var(--primary-color); 
+            color: white; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav><div class="logo">PLAY&GO</div></nav>
+        
+        <section class="header-section">
+            <h1 class="main-headline">Nadchodzące premiery</h1>
+            <p class="sub-headline">Zarezerwuj kopię dla siebie, póki jest dostępna.</p>
+        </section>
+        
+        <section class="games-section">
+            <div id="loader">Ładowanie gier...</div>
+            <div id="games-grid" class="games-grid"></div>
+        </section>
+    </div>
+
+    <div id="reservation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Rezerwacja</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <form id="reservation-form">
+                <input type="hidden" id="game-title-input">
+                <label for="customer-name">Imię i Nazwisko:</label>
+                <input type="text" id="customer-name" required placeholder="Jan Kowalski">
+                <label for="customer-phone">Numer telefonu:</label>
+                <input type="tel" id="customer-phone" required placeholder="123456789">
+                <label for="customer-email">E-mail:</label>
+                <input type="email" id="customer-email" required placeholder="twoj@email.pl">
+                <button type="submit" id="submit-reservation">Potwierdzam Rezerwację</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzflLazzCVjCXN1g_ewSi8LVWXJvzrfzW44Dhg4yMSDBnvkZiP5Bz0vNRi-HCSmLcEYJQ/exec';
+
+        const loader = document.getElementById('loader');
+        const gamesGrid = document.getElementById('games-grid');
+        const modal = document.getElementById('reservation-modal');
+
+        async function fetchSiteData() {
+            try {
+                const response = await fetch(WEB_APP_URL);
+                const siteData = await response.json();
+                const { games, settings } = siteData;
+
+                if (settings?.TloStronyURL) {
+                    document.body.style.backgroundImage = `url('${settings.TloStronyURL}')`;
+                }
+
+                loader.style.display = 'none';
+                
+                games.forEach(game => {
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    
+                    const rawId = (game.Tytul + (game.Platforma || '')).replace(/[^a-zA-Z0-9]/g, '-');
+                    const gameId = `countdown-${rawId}`;
+
+                    const imageUrl = game.OkladkaURL || 'https://via.placeholder.com/300x450?text=Brak+Okładki';
+                    const cenaText = game.Cena ? `${game.Cena} zł` : 'TBA';
+                    const dataText = game['Data Premiery'] ? new Date(game['Data Premiery']).toLocaleDateString('pl-PL') : 'Wkrótce';
+
+                    card.innerHTML = `
+                        <img src="${imageUrl}" alt="${game.Tytul}" class="card-bg-image">
+                        <div class="card-content">
+                            <div class="card-platform">${game.Platforma || 'Gra'}</div>
+                            <h3 class="card-title">${game.Tytul}</h3>
+                            <div class="card-info-group">
+                                <p class="card-date">Premiera: ${dataText}</p>
+                                <span class="card-countdown" id="${gameId}"></span>
+                            </div>
+                            <div class="card-spacer"></div>
+                            <div class="card-footer">
+                                <p class="card-price">${cenaText}</p>
+                                <button class="card-button" data-title="${game.Tytul} (${game.Platforma || ''})">BIORE NA PREMIERE</button>
+                            </div>
+                        </div>
+                    `;
+                    gamesGrid.appendChild(card);
+                    
+                    if (game['Data Premiery']) {
+                        const countdownEl = document.getElementById(gameId);
+                        if (countdownEl) startCardCountdown(new Date(game['Data Premiery']), countdownEl);
+                    }
+                });
+
+                document.querySelectorAll('.card-button').forEach(button => {
+                    button.addEventListener('click', (e) => openModal(e.target.getAttribute('data-title')));
+                });
+
+            } catch (error) {
+                loader.textContent = 'Błąd ładowania.';
+                console.error(error);
+            }
+        }
+
+        function startCardCountdown(targetDate, element) {
+            const update = () => {
+                const now = new Date();
+                const d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const d2 = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+                
+                const diffTime = d2 - d1;
+                const d = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (d < 0) { 
+                    element.innerHTML = "Dostępna!"; 
+                    return; 
+                }
+                if (d === 0) {
+                    element.innerHTML = "Premiera <span class=\"days-val\">DZISIAJ</span>!";
+                    return;
+                }
+
+                const label = d === 1 ? "dzień" : "dni";
+                element.innerHTML = `Zostało: <span class="days-val">${d}</span> ${label}`;
+            };
+            update();
+            setInterval(update, 3600000);
+        }
+
+        function openModal(gameTitle) {
+            modal.querySelector('#modal-title').textContent = `Rezerwacja: ${gameTitle}`;
+            modal.querySelector('#game-title-input').value = gameTitle;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() { modal.style.display = 'none'; document.getElementById('reservation-form').reset(); }
+        modal.querySelector('.close-btn').addEventListener('click', closeModal);
+        window.addEventListener('click', (e) => { if (e.target == modal) closeModal(); });
+
+        document.getElementById('reservation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-reservation');
+            const formData = new URLSearchParams();
+            formData.append('tytul', document.getElementById('game-title-input').value);
+            formData.append('imie', document.getElementById('customer-name').value);
+            formData.append('telefon', document.getElementById('customer-phone').value);
+            formData.append('email', document.getElementById('customer-email').value);
+
+            btn.disabled = true;
+            btn.textContent = 'Wysyłanie...';
+
+            try {
+                await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: formData });
+                alert('Dziękujemy! Twoja rezerwacja została zapisana.');
+                closeModal();
+            } catch (error) {
+                alert('Wystąpił błąd.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Potwierdzam Rezerwację';
+            }
+        });
+        
+        fetchSiteData();
+    </script>
+</body>
+</html>
