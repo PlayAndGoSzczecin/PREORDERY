@@ -24,7 +24,7 @@
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.6); 
+            background: rgba(0, 0, 0, 0.65); 
             z-index: -1; 
         }
 
@@ -33,141 +33,188 @@
         nav { 
             text-align: center; 
             padding: 20px 0; 
-            font-size: 2.5rem; 
+            font-size: 2.8rem; 
             font-weight: 800; 
             color: #fff; 
-            text-shadow: 0 0 15px var(--primary); 
-            letter-spacing: 3px;
+            text-shadow: 0 0 20px var(--primary); 
+            letter-spacing: 4px;
         }
 
         .header-section { 
-    text-align: center; 
-    background: rgba(0,0,0,0.7); 
-    padding: 30px 15px; 
-    border-radius: 20px; 
-    margin: 20px auto 40px; 
-    max-width: 800px; 
-    border: 1px solid #333; 
-    backdrop-filter: blur(10px); 
-}
-.header-section h1 { 
-    margin: 0; 
-    font-size: 2.2rem; 
-    color: #fff; 
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-.subtitle {
-    margin-top: 10px;
-    font-size: 1.1rem;
-    color: var(--primary); /* Twój jasnoniebieski kolor */
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-        #loader { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--primary); }
+            text-align: center; 
+            background: rgba(0,0,0,0.75); 
+            padding: 35px 20px; 
+            border-radius: 25px; 
+            margin: 20px auto 50px; 
+            max-width: 850px; 
+            border: 1px solid #444; 
+            backdrop-filter: blur(12px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .header-section h1 { 
+            margin: 0; 
+            font-size: 2.4rem; 
+            color: #fff; 
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            margin-top: 12px;
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0;
+        }
+
+        #loader { text-align: center; padding: 50px; font-size: 1.3rem; color: var(--primary); font-weight: 600; }
 
         .games-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 25px; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 30px; 
         }
 
         .game-card { 
             background: var(--card); 
-            border-radius: 20px; 
+            border-radius: 22px; 
             overflow: hidden; 
             position: relative; 
-            height: 500px; 
+            height: 520px; 
             border: 1px solid #333; 
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .game-card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px rgba(0, 170, 255, 0.2);
+        }
 
         .card-img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            filter: brightness(1.2);
+            filter: brightness(0.9); /* Zoptymalizowana jasność */
             position: absolute; 
+            transition: 0.5s;
         }
+
+        .game-card:hover .card-img { filter: brightness(1); transform: scale(1.05); }
 
         .card-body { 
             position: relative; 
             z-index: 1; 
-            padding: 25px; 
+            padding: 30px; 
             height: 100%; 
             display: flex; 
             flex-direction: column; 
             box-sizing: border-box; 
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 35%, transparent 100%); 
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 45%, transparent 100%); 
         }
 
         .platform { 
             background: var(--primary); 
             color: #fff; 
-            padding: 5px 12px; 
-            border-radius: 6px; 
+            padding: 6px 14px; 
+            border-radius: 8px; 
             font-size: 0.75rem; 
             font-weight: 800; 
             align-self: flex-start; 
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0, 170, 255, 0.3);
         }
 
         .title { 
-    font-size: 1.7rem; 
-    font-weight: 800; 
-    color: #fff; 
-    line-height: 1.2; 
-    margin-bottom: 5px;
-    /* DODAJ TĘ LINIĘ PONIŻEJ: */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-        .date-info { font-size: 0.85rem; opacity: 0.8; }
-        .countdown { font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; }
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            color: #fff; 
+            line-height: 1.1; 
+            margin-bottom: 8px;
+            /* Solidne czarne obramowanie */
+            text-shadow: 
+                -1px -1px 0 #000,  
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                 2px  2px 5px rgba(0,0,0,0.9);
+        }
 
-        .price { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 15px; }
+        .date-info { font-size: 0.9rem; opacity: 0.9; font-weight: 500; }
+        .countdown { font-size: 0.95rem; font-weight: 700; margin-bottom: 20px; }
+
+        .price { 
+            font-size: 2.4rem; 
+            font-weight: 800; 
+            color: var(--primary); 
+            margin-top: auto; 
+            margin-bottom: 18px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
         .btn { 
             background: #ff4444; 
             color: #fff; 
             border: none; 
-            padding: 16px; 
-            border-radius: 14px; 
+            padding: 18px; 
+            border-radius: 16px; 
             font-weight: 800; 
             cursor: pointer; 
             text-transform: uppercase; 
             width: 100%;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .btn:disabled { background: #555 !important; cursor: not-allowed; }
+        .btn:hover:not(:disabled) { background: #cc0000; transform: scale(1.02); }
+        .btn:disabled { background: #444 !important; cursor: not-allowed; opacity: 0.6; }
 
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px); }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); }
         .modal-content { 
             background: var(--card); 
-            margin: 15vh auto; 
-            padding: 35px; 
-            border-radius: 25px; 
+            margin: 12vh auto; 
+            padding: 40px; 
+            border-radius: 30px; 
             width: 90%; 
-            max-width: 420px; 
+            max-width: 440px; 
             border: 1px solid var(--primary); 
             position: relative; 
             box-sizing: border-box;
+            box-shadow: 0 0 40px rgba(0, 170, 255, 0.2);
         }
 
         input { 
             width: 100%; 
-            padding: 15px; 
-            margin: 12px 0; 
-            border-radius: 12px; 
+            padding: 16px; 
+            margin: 14px 0; 
+            border-radius: 14px; 
             border: 1px solid #333; 
             background: #1a1f26; 
             color: #fff; 
             box-sizing: border-box; 
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
         }
 
-        #successMessage { display: none; background: #28a745; color: white; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; }
-        .close-btn { position: absolute; right: 25px; top: 20px; color: #fff; font-size: 35px; cursor: pointer; }
+        #successMessage { 
+            display: none; 
+            background: #28a745; 
+            color: white; 
+            padding: 25px; 
+            border-radius: 20px; 
+            text-align: center; 
+            font-weight: 800; 
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .close-btn { position: absolute; right: 25px; top: 20px; color: #fff; font-size: 40px; cursor: pointer; opacity: 0.7; transition: 0.3s; }
+        .close-btn:hover { opacity: 1; }
+
     </style>
 </head>
 <body>
@@ -175,26 +222,26 @@
     <div class="container">
         <nav>PLAY&GO</nav>
         
-       <div class="header-section">
-    <h1>Nadchodzące premiery.</h1>
-    <p class="subtitle">Kliknij i zamów, zanim ktoś Cię ubiegnie!</p>
-</div>
+        <div class="header-section">
+            <h1>Nadchodzące premiery.</h1>
+            <p class="subtitle">Kliknij i zamów, zanim ktoś Cię ubiegnie!</p>
+        </div>
 
-        <div id="loader">Wczytywanie ofert...</div>
+        <div id="loader">Wyszukiwanie najgorętszych tytułów...</div>
         <div id="games-grid" class="games-grid"></div>
     </div>
 
     <div id="resModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="successMessage">REZERWACJA ZAPISANA, SPRAWDŹ e-mail!</div>
+            <div id="successMessage">REZERWACJA ZAPISANA!<br><small style="font-weight:400">Sprawdź e-mail w poszukiwaniu potwierdzenia.</small></div>
             <div id="formContainer">
-                <h2 id="modalTitle" style="color:#fff; margin-top:0;">Rezerwacja</h2>
+                <h2 id="modalTitle" style="color:#fff; margin-top:0; font-size:1.8rem;">Rezerwacja</h2>
                 <form id="resForm">
                     <input type="hidden" id="gameTitle">
                     <input type="text" id="custName" placeholder="Imię i Nazwisko" required>
-                    <input type="tel" id="custPhone" placeholder="Numer telefonu" required>
-                    <input type="email" id="custEmail" placeholder="Adres e-mail" required>
+                    <input type="tel" id="custPhone" placeholder="Twój numer telefonu" required>
+                    <input type="email" id="custEmail" placeholder="Twój adres e-mail" required>
                     <button type="submit" id="submitBtn" class="btn">POTWIERDZAM REZERWACJĘ</button>
                 </form>
             </div>
@@ -223,7 +270,7 @@
                     
                     let isAvailable = (game.Dostepne > 0);
                     let buttonHtml = isAvailable 
-                        ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">Zabawię się w sapera i zamowię</button>`
+                        ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">Zabawię się w sapera i zamówię</button>`
                         : `<button class="btn" disabled>WYPRZEDANE</button>`;
 
                     let dataTekst = "Wkrótce";
@@ -237,11 +284,11 @@
                         
                         if (diff > 0) countdownTekst = `Zostało: <span style="color:var(--primary)">${diff} dni</span>`;
                         else if (diff === 0) countdownTekst = "Premiera DZISIAJ!";
-                        else countdownTekst = "Już w sprzedaży!";
+                        else countdownTekst = "Dostępna w ofercie!";
                     }
 
                     card.innerHTML = `
-                        <img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450?text=Brak+Okładki'">
+                        <img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/400x600?text=Brak+Okładki'">
                         <div class="card-body">
                             <span class="platform">${game.Platforma || 'GRA'}</span>
                             <div class="title">${game.Tytul}</div>
@@ -254,7 +301,7 @@
                     grid.appendChild(card);
                 });
             } catch (e) {
-                document.getElementById('loader').innerText = "Błąd połączenia.";
+                document.getElementById('loader').innerText = "Wystąpił błąd podczas ładowania danych.";
             }
         }
 
@@ -273,7 +320,7 @@
         document.getElementById('resForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            btn.disabled = true; btn.innerText = "WYSYŁANIE...";
+            btn.disabled = true; btn.innerText = "PRZETWARZANIE...";
 
             const p = new URLSearchParams({
                 tytul: document.getElementById('gameTitle').value,
@@ -286,10 +333,11 @@
                 await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
                 document.getElementById('formContainer').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
-                setTimeout(closeModal, 3000);
+                setTimeout(closeModal, 4000);
             } catch (err) {
-                alert('Błąd wysyłki.');
+                alert('Błąd połączenia z serwerem.');
                 btn.disabled = false;
+                btn.innerText = "POTWIERDZAM REZERWACJĘ";
             }
         };
 
