@@ -55,10 +55,10 @@
             letter-spacing: 2px;
         }
 
-        /* SEKCJA NAGŁÓWKA - RESPONSYWNA */
+        /* SEKCJA NAGŁÓWKA - POPRAWIONA MOBILNIE */
         .header-section {
             text-align: center;
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 1rem; /* Mniejszy padding boczny na start */
             margin: 2rem auto;
             max-width: 900px;
             background: rgba(0, 0, 0, 0.6);
@@ -67,23 +67,27 @@
             border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            word-wrap: break-word; /* Zabezpieczenie przed wychodzeniem tekstu */
+            overflow-wrap: break-word;
         }
 
         .main-headline {
-            font-size: clamp(1.8rem, 8vw, 3.5rem); /* Dynamiczna wielkość: min 1.8rem, max 3.5rem */
+            /* Skalowanie: minimum 1.5rem, optymalnie 7vw, maksimum 3.5rem */
+            font-size: clamp(1.5rem, 7vw, 3.5rem); 
             font-weight: 800;
             color: var(--header-color);
             margin: 0;
             text-transform: uppercase;
-            line-height: 1.1;
+            line-height: 1.2;
+            hyphens: auto; /* Dzielenie wyrazów w razie kryzysu */
         }
 
         .sub-headline {
-            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            font-size: clamp(0.85rem, 4vw, 1.1rem);
             color: var(--text-color);
             margin-top: 1rem;
             font-weight: 400;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         
         .games-grid { 
@@ -210,24 +214,34 @@
         }
 
         /* MODAL RESPONSYWNY */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            backdrop-filter: blur(8px); 
+            background-color: rgba(0,0,0,0.8); 
+        }
+
         .modal-content { 
             background-color: var(--card-background); 
             margin: 15% auto; 
             padding: 1.5rem; 
             border-radius: 16px; 
-            width: 90%; 
+            width: 85%; 
             max-width: 450px; 
             border: 1px solid var(--primary-color); 
         }
 
-        /* MEDIA QUERIES DLA TELEFONÓW */
-        @media (max-width: 600px) {
-            .container { padding: 0 0.8rem; }
-            .header-section { margin: 1.5rem auto; padding: 1.5rem 1rem; }
-            .main-headline { letter-spacing: -1px; }
-            .games-grid { gap: 1rem; }
-            .card-title { font-size: 1.5rem; }
-            .card-price { font-size: 1.6rem; }
+        /* DODATKOWE POPRAWKI DLA BARDZO MAŁYCH EKRANÓW */
+        @media (max-width: 400px) {
+            .logo { font-size: 1.5rem; }
+            .header-section { padding: 1.5rem 0.5rem; margin: 1rem auto; }
+            .main-headline { font-size: 1.4rem; }
+            .card-title { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -248,19 +262,22 @@
 
     <div id="reservation-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title" style="font-size: 1.2rem;">Rezerwacja</h2>
-                <span class="close-btn">&times;</span>
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 id="modal-title" style="font-size: 1.1rem; margin: 0;">Rezerwacja</h2>
+                <span class="close-btn" style="font-size: 2rem; cursor: pointer;">&times;</span>
             </div>
-            <form id="reservation-form">
+            <form id="reservation-form" style="margin-top: 1rem;">
                 <input type="hidden" id="game-title-input">
-                <label for="customer-name">Imię i Nazwisko:</label>
-                <input type="text" id="customer-name" required placeholder="Jan Kowalski">
-                <label for="customer-phone">Numer telefonu:</label>
-                <input type="tel" id="customer-phone" required placeholder="123456789">
-                <label for="customer-email">E-mail:</label>
-                <input type="email" id="customer-email" required placeholder="twoj@email.pl">
-                <button type="submit" id="submit-reservation">Potwierdzam Rezerwację</button>
+                <label for="customer-name" style="display:block; margin-bottom:5px; font-size:0.8rem;">Imię i Nazwisko:</label>
+                <input type="text" id="customer-name" required placeholder="Jan Kowalski" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #333; background:#222; color:white; box-sizing:border-box;">
+                
+                <label for="customer-phone" style="display:block; margin-bottom:5px; font-size:0.8rem;">Numer telefonu:</label>
+                <input type="tel" id="customer-phone" required placeholder="123456789" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #333; background:#222; color:white; box-sizing:border-box;">
+                
+                <label for="customer-email" style="display:block; margin-bottom:5px; font-size:0.8rem;">E-mail:</label>
+                <input type="email" id="customer-email" required placeholder="twoj@email.pl" style="width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid #333; background:#222; color:white; box-sizing:border-box;">
+                
+                <button type="submit" id="submit-reservation" style="width:100%; padding:12px; background:var(--primary-color); border:none; color:white; font-weight:bold; border-radius:8px; cursor:pointer;">Potwierdzam Rezerwację</button>
             </form>
         </div>
     </div>
@@ -353,7 +370,7 @@
         }
 
         function closeModal() { modal.style.display = 'none'; document.getElementById('reservation-form').reset(); }
-        modal.querySelector('.close-btn').addEventListener('click', closeModal);
+        document.querySelector('.close-btn').addEventListener('click', closeModal);
         window.addEventListener('click', (e) => { if (e.target == modal) closeModal(); });
 
         document.getElementById('reservation-form').addEventListener('submit', async (e) => {
