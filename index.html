@@ -19,13 +19,12 @@
             background-position: center; 
         }
 
-        /* Przyciemnienie tła dla czytelności */
         body::before { 
             content: ""; 
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.65); 
+            background: rgba(0, 0, 0, 0.6); 
             z-index: -1; 
         }
 
@@ -33,13 +32,25 @@
         
         nav { 
             text-align: center; 
-            padding: 30px 0; 
+            padding: 20px 0; 
             font-size: 2.5rem; 
             font-weight: 800; 
             color: #fff; 
             text-shadow: 0 0 15px var(--primary); 
             letter-spacing: 3px;
         }
+
+        .header-section { 
+            text-align: center; 
+            background: rgba(0,0,0,0.7); 
+            padding: 30px 15px; 
+            border-radius: 20px; 
+            margin: 20px auto 40px; 
+            max-width: 800px; 
+            border: 1px solid #333; 
+            backdrop-filter: blur(10px); 
+        }
+        .header-section h1 { margin: 0; font-size: 2rem; color: #fff; }
 
         #loader { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--primary); }
 
@@ -56,7 +67,7 @@
             position: relative; 
             height: 500px; 
             border: 1px solid #333; 
-            transition: transform 0.3s ease;
+            transition: 0.3s;
         }
 
         .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
@@ -65,7 +76,7 @@
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            filter: brightness(0.4); 
+            filter: brightness(0.7); /* ROZJAŚNIONO Z 0.4 NA 0.7 */
             position: absolute; 
         }
 
@@ -77,7 +88,7 @@
             display: flex; 
             flex-direction: column; 
             box-sizing: border-box; 
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 40%, transparent 100%); 
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 35%, transparent 100%); 
         }
 
         .platform { 
@@ -92,8 +103,7 @@
         }
 
         .title { font-size: 1.7rem; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 5px; }
-        
-        .date-info { font-size: 0.85rem; opacity: 0.8; margin-bottom: 2px; }
+        .date-info { font-size: 0.85rem; opacity: 0.8; }
         .countdown { font-size: 0.9rem; font-weight: 700; margin-bottom: 15px; }
 
         .price { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 15px; }
@@ -108,13 +118,10 @@
             cursor: pointer; 
             text-transform: uppercase; 
             width: 100%;
-            transition: 0.3s;
         }
 
-        .btn:disabled { background: #555 !important; cursor: not-allowed; opacity: 0.7; }
-        .btn:hover:not(:disabled) { background: #cc0000; }
+        .btn:disabled { background: #555 !important; cursor: not-allowed; }
 
-        /* Modal rezerwacji */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px); }
         .modal-content { 
             background: var(--card); 
@@ -137,12 +144,9 @@
             background: #1a1f26; 
             color: #fff; 
             box-sizing: border-box; 
-            font-family: inherit;
-            font-size: 1rem;
         }
 
         #successMessage { display: none; background: #28a745; color: white; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; }
-
         .close-btn { position: absolute; right: 25px; top: 20px; color: #fff; font-size: 35px; cursor: pointer; }
     </style>
 </head>
@@ -150,14 +154,19 @@
 
     <div class="container">
         <nav>PLAY&GO</nav>
-        <div id="loader">Wczytywanie najnowszych ofert...</div>
+        
+        <div class="header-section">
+            <h1>Nadchodzące premiery.</h1>
+        </div>
+
+        <div id="loader">Wczytywanie ofert...</div>
         <div id="games-grid" class="games-grid"></div>
     </div>
 
     <div id="resModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="successMessage">REZERWACJA ZAPISANA!<br><small>Potwierdzenie wysłaliśmy na e-mail.</small></div>
+            <div id="successMessage">REZERWACJA ZAPISANA!</div>
             <div id="formContainer">
                 <h2 id="modalTitle" style="color:#fff; margin-top:0;">Rezerwacja</h2>
                 <form id="resForm">
@@ -179,7 +188,6 @@
                 const res = await fetch(URL);
                 const data = await res.json();
                 
-                // Ustawienie tła strony
                 if (data.settings && data.settings.TloStronyURL) {
                     document.body.style.backgroundImage = `url('${data.settings.TloStronyURL}')`;
                 }
@@ -192,30 +200,23 @@
                     const card = document.createElement('div');
                     card.className = 'game-card';
                     
-                    // Logika dostępności (Limity)
                     let isAvailable = (game.Dostepne > 0);
                     let buttonHtml = isAvailable 
                         ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">BIORE</button>`
                         : `<button class="btn" disabled>WYPRZEDANE</button>`;
 
-                    // Formatowanie daty premiery i odliczanie
                     let dataTekst = "Wkrótce";
                     let countdownTekst = "";
                     
                     if (game.DataPremiery) {
                         const dPremiera = new Date(game.DataPremiery);
                         dataTekst = dPremiera.toLocaleDateString('pl-PL');
-                        
                         const teraz = new Date();
                         const diff = Math.ceil((dPremiera - teraz) / (1000 * 60 * 60 * 24));
                         
-                        if (diff > 0) {
-                            countdownTekst = `Zostało: <span style="color:var(--primary)">${diff} dni</span>`;
-                        } else if (diff === 0) {
-                            countdownTekst = "Premiera DZISIAJ!";
-                        } else {
-                            countdownTekst = "Już w sprzedaży!";
-                        }
+                        if (diff > 0) countdownTekst = `Zostało: <span style="color:var(--primary)">${diff} dni</span>`;
+                        else if (diff === 0) countdownTekst = "Premiera DZISIAJ!";
+                        else countdownTekst = "Już w sprzedaży!";
                     }
 
                     card.innerHTML = `
@@ -225,15 +226,14 @@
                             <div class="title">${game.Tytul}</div>
                             <div class="date-info">Premiera: ${dataTekst}</div>
                             <div class="countdown">${countdownTekst}</div>
-                            <div class="price">${game.Cena}</div>
+                            <div class="price">${game.Cena} zł</div>
                             ${buttonHtml}
                         </div>
                     `;
                     grid.appendChild(card);
                 });
             } catch (e) {
-                console.error("Błąd:", e);
-                document.getElementById('loader').innerText = "Błąd połączenia z bazą danych. Spróbuj odświeżyć.";
+                document.getElementById('loader').innerText = "Błąd połączenia.";
             }
         }
 
@@ -262,22 +262,13 @@
             });
 
             try {
-                // Tryb no-cors pozwala na wysyłkę danych do Google Apps Script
                 await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
-                
                 document.getElementById('formContainer').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
-                
-                setTimeout(() => {
-                    closeModal();
-                    document.getElementById('resForm').reset();
-                    btn.disabled = false;
-                    btn.innerText = "POTWIERDZAM REZERWACJĘ";
-                }, 3500);
+                setTimeout(closeModal, 3000);
             } catch (err) {
-                alert('Błąd połączenia. Spróbuj ponownie za chwilę.');
+                alert('Błąd wysyłki.');
                 btn.disabled = false;
-                btn.innerText = "POTWIERDZAM REZERWACJĘ";
             }
         };
 
