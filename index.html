@@ -2,8 +2,8 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PREORDER - Nadchodzące Premiery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PREORDER - PLAY&GO</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -27,374 +27,192 @@
             background-attachment: fixed; 
             background-size: cover; 
             min-height: 100vh;
+            overflow-x: hidden; /* Blokada bocznego przesuwania */
         }
 
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); 
+            background: rgba(0, 0, 0, 0.5); 
             z-index: -1;
         }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 1; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 15px; position: relative; z-index: 1; box-sizing: border-box; }
         
-        nav { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 1.5rem 0; 
-            border-bottom: 1px solid var(--border-color); 
-        }
+        nav { display: flex; justify-content: center; padding: 1.5rem 0; border-bottom: 1px solid var(--border-color); }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--header-color); text-shadow: 0 0 10px var(--primary-color); letter-spacing: 2px; }
 
-        .logo { 
-            font-size: 1.8rem; 
-            font-weight: 700; 
-            color: var(--header-color); 
-            text-shadow: 0 0 12px var(--primary-color); 
-            letter-spacing: 2px;
-        }
-
-        /* SEKCJA NAGŁÓWKA - POPRAWIONA MOBILNIE */
+        /* FIX NAGŁÓWKA */
         .header-section {
             text-align: center;
-            padding: 2.5rem 1rem; /* Mniejszy padding boczny na start */
+            padding: 2rem 1rem;
             margin: 2rem auto;
-            max-width: 900px;
-            background: rgba(0, 0, 0, 0.6);
+            max-width: 95%;
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            word-wrap: break-word; /* Zabezpieczenie przed wychodzeniem tekstu */
-            overflow-wrap: break-word;
+            box-sizing: border-box;
         }
 
         .main-headline {
-            /* Skalowanie: minimum 1.5rem, optymalnie 7vw, maksimum 3.5rem */
-            font-size: clamp(1.5rem, 7vw, 3.5rem); 
+            font-size: clamp(1.4rem, 6vw, 3rem); /* Zmniejszony dolny limit */
             font-weight: 800;
             color: var(--header-color);
             margin: 0;
             text-transform: uppercase;
             line-height: 1.2;
-            hyphens: auto; /* Dzielenie wyrazów w razie kryzysu */
+            word-wrap: break-word;
         }
 
-        .sub-headline {
-            font-size: clamp(0.85rem, 4vw, 1.1rem);
-            color: var(--text-color);
-            margin-top: 1rem;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
+        .sub-headline { font-size: 0.9rem; margin-top: 10px; opacity: 0.9; line-height: 1.4; }
         
-        .games-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 1.5rem; 
-            padding-bottom: 4rem; 
-        }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding-bottom: 4rem; }
 
         .game-card {
-            position: relative;
-            height: 480px;
-            border-radius: 20px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            background-color: var(--card-background);
-            transition: all 0.4s ease;
-            border: 1px solid var(--border-color);
+            position: relative; height: 450px; border-radius: 15px; overflow: hidden;
+            display: flex; flex-direction: column; background: var(--card-background);
+            border: 1px solid var(--border-color); transition: 0.3s;
         }
 
-        .game-card:hover {
-            box-shadow: 0 0 40px rgba(0, 170, 255, 0.3);
-            border: 1px solid var(--primary-color);
-            transform: translateY(-8px);
-        }
+        .card-bg-image { position: absolute; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); z-index: 0; }
+        .card-content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; padding: 1.2rem; background: linear-gradient(to top, rgba(0,0,0,0.9) 30%, transparent 100%); }
+        .card-platform { font-size: 0.7rem; font-weight: 800; color: white; background: var(--primary-color); padding: 3px 10px; border-radius: 5px; align-self: flex-start; margin-bottom: 10px; }
+        .card-title { font-size: 1.7rem; font-weight: 800; color: white; margin: 0; line-height: 1.1; }
+        .card-price { font-size: 1.8rem; font-weight: 800; color: var(--primary-color); }
+        .card-button { background: #ff4444; border: none; color: white; padding: 10px 15px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 0.7rem; }
 
-        .card-bg-image { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            filter: brightness(0.5); 
-            z-index: 0; 
-        }
-
-        .card-content { 
-            position: relative; 
-            z-index: 1; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100%; 
-            padding: 1.2rem;
-            background: linear-gradient(to top, rgba(13,17,23,0.95) 30%, transparent 100%);
-        }
-
-        .card-platform { 
-            font-size: 0.7rem; 
-            font-weight: 800; 
-            color: white; 
-            background: var(--primary-color);
-            align-self: flex-start;
-            padding: 3px 10px;
-            border-radius: 50px;
-            margin-bottom: 0.6rem;
-            text-transform: uppercase;
-        }
-
-        .card-title { 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-            color: white; 
-            margin: 0; 
-            line-height: 1.1; 
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-        }
-
-        .card-info-group {
-            margin-top: 8px;
-        }
-
-        .card-date { 
-            font-size: 0.85rem; 
-            font-weight: 400; 
-            color: rgba(255,255,255,0.7); 
-            margin: 0;
-        }
-
-        .card-countdown { 
-            font-size: 0.9rem; 
-            font-weight: 700; 
-            color: white; 
-            margin-top: 4px;
-            display: block;
-        }
-
-        .card-countdown .days-val { 
-            color: var(--primary-color); 
-            font-size: 1.1rem;
-            font-weight: 800;
-        }
-
-        .card-spacer { flex-grow: 1; }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding-top: 1rem;
-        }
-
-        .card-price { 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-            color: var(--primary-color); 
-            margin: 0;
-            line-height: 1;
-        }
-
-        .card-button { 
-            background-color: #ff4444; 
-            border: none; 
-            color: white; 
-            font-size: 0.65rem; 
-            font-weight: 800; 
-            cursor: pointer; 
-            padding: 10px 14px; 
-            border-radius: 10px; 
-            text-transform: uppercase;
-        }
-
-        /* MODAL RESPONSYWNY */
+        /* FIX MODALA NA TELEFON */
         .modal { 
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            left: 0; 
-            top: 0; 
-            width: 100%; 
-            height: 100%; 
-            backdrop-filter: blur(8px); 
-            background-color: rgba(0,0,0,0.8); 
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
+            width: 100%; height: 100%; background: rgba(0,0,0,0.85); 
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            overflow-y: auto; /* Kluczowe: pozwala przewijać formularz na małym ekranie */
         }
 
         .modal-content { 
-            background-color: var(--card-background); 
-            margin: 15% auto; 
-            padding: 1.5rem; 
-            border-radius: 16px; 
-            width: 85%; 
-            max-width: 450px; 
-            border: 1px solid var(--primary-color); 
+            background: var(--card-background); 
+            margin: 10% auto; 
+            padding: 20px; 
+            border-radius: 15px; 
+            width: 90%; 
+            max-width: 400px; 
+            border: 1px solid var(--primary-color);
+            position: relative;
         }
 
-        /* DODATKOWE POPRAWKI DLA BARDZO MAŁYCH EKRANÓW */
-        @media (max-width: 400px) {
-            .logo { font-size: 1.5rem; }
-            .header-section { padding: 1.5rem 0.5rem; margin: 1rem auto; }
-            .main-headline { font-size: 1.4rem; }
-            .card-title { font-size: 1.4rem; }
+        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 2rem; color: #aaa; cursor: pointer; }
+        
+        #reservation-form label { display: block; margin-bottom: 5px; font-size: 0.8rem; color: #bbb; }
+        #reservation-form input { 
+            width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; 
+            border: 1px solid #333; background: #222; color: white; box-sizing: border-box; 
+        }
+
+        #submit-reservation { 
+            width: 100%; padding: 15px; background: var(--primary-color); 
+            border: none; color: white; font-weight: 800; border-radius: 8px; cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <nav><div class="logo">PREORDER.</div></nav>
-        
+        <nav><div class="logo">PLAY&GO</div></nav>
         <section class="header-section">
             <h1 class="main-headline">Nadchodzące premiery.</h1>
-            <p class="sub-headline">Zarezerwuj kopię, zanim zniknie.</p>
+            <p class="sub-headline">Zarezerwuj kopię dla siebie, póki jest dostępna.</p>
         </section>
-        
-        <section class="games-section">
-            <div id="loader">Ładowanie gier...</div>
-            <div id="games-grid" class="games-grid"></div>
-        </section>
+        <div id="loader" style="text-align:center; padding: 20px;">Ładowanie ofert...</div>
+        <div id="games-grid" class="games-grid"></div>
     </div>
 
     <div id="reservation-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 id="modal-title" style="font-size: 1.1rem; margin: 0;">Rezerwacja</h2>
-                <span class="close-btn" style="font-size: 2rem; cursor: pointer;">&times;</span>
-            </div>
-            <form id="reservation-form" style="margin-top: 1rem;">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title" style="font-size: 1.2rem; margin-bottom: 20px;">Rezerwacja</h2>
+            <form id="reservation-form">
                 <input type="hidden" id="game-title-input">
-                <label for="customer-name" style="display:block; margin-bottom:5px; font-size:0.8rem;">Imię i Nazwisko:</label>
-                <input type="text" id="customer-name" required placeholder="Jan Kowalski" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #333; background:#222; color:white; box-sizing:border-box;">
-                
-                <label for="customer-phone" style="display:block; margin-bottom:5px; font-size:0.8rem;">Numer telefonu:</label>
-                <input type="tel" id="customer-phone" required placeholder="123456789" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #333; background:#222; color:white; box-sizing:border-box;">
-                
-                <label for="customer-email" style="display:block; margin-bottom:5px; font-size:0.8rem;">E-mail:</label>
-                <input type="email" id="customer-email" required placeholder="twoj@email.pl" style="width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid #333; background:#222; color:white; box-sizing:border-box;">
-                
-                <button type="submit" id="submit-reservation" style="width:100%; padding:12px; background:var(--primary-color); border:none; color:white; font-weight:bold; border-radius:8px; cursor:pointer;">Potwierdzam Rezerwację</button>
+                <label>Imię i Nazwisko:</label>
+                <input type="text" id="customer-name" required>
+                <label>Numer telefonu:</label>
+                <input type="tel" id="customer-phone" required>
+                <label>E-mail:</label>
+                <input type="email" id="customer-email" required>
+                <button type="submit" id="submit-reservation">ZAMAWIAM</button>
             </form>
         </div>
     </div>
 
     <script>
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzflLazzCVjCXN1g_ewSi8LVWXJvzrfzW44Dhg4yMSDBnvkZiP5Bz0vNRi-HCSmLcEYJQ/exec';
-
-        const loader = document.getElementById('loader');
-        const gamesGrid = document.getElementById('games-grid');
-        const modal = document.getElementById('reservation-modal');
+        const WEB_APP_URL = 'TWOJ_LINK_DO_SKRYPTU'; // <--- UPEWNIJ SIĘ, ŻE TU JEST LINK
 
         async function fetchSiteData() {
             try {
                 const response = await fetch(WEB_APP_URL);
-                const siteData = await response.json();
-                const { games, settings } = siteData;
-
-                if (settings?.TloStronyURL) {
-                    document.body.style.backgroundImage = `url('${settings.TloStronyURL}')`;
-                }
-
-                loader.style.display = 'none';
+                const data = await response.json();
+                document.getElementById('loader').style.display = 'none';
                 
-                games.forEach(game => {
-                    const card = document.createElement('div');
-                    card.className = 'game-card';
-                    
-                    const rawId = (game.Tytul + (game.Platforma || '')).replace(/[^a-zA-Z0-9]/g, '-');
-                    const gameId = `countdown-${rawId}`;
-
-                    const imageUrl = game.OkladkaURL || 'https://via.placeholder.com/300x450?text=Brak+Okładki';
-                    const cenaText = game.Cena ? `${game.Cena} zł` : 'TBA';
-                    const dataText = game['Data Premiery'] ? new Date(game['Data Premiery']).toLocaleDateString('pl-PL') : 'Wkrótce';
-
-                    card.innerHTML = `
-                        <img src="${imageUrl}" alt="${game.Tytul}" class="card-bg-image">
+                data.games.forEach(game => {
+                    const gameId = (game.Tytul + (game.Platforma || '')).replace(/[^a-zA-Z0-9]/g, '-');
+                    const div = document.createElement('div');
+                    div.className = 'game-card';
+                    div.innerHTML = `
+                        <img src="${game.OkladkaURL}" class="card-bg-image">
                         <div class="card-content">
-                            <div class="card-platform">${game.Platforma || 'Gra'}</div>
+                            <div class="card-platform">${game.Platforma}</div>
                             <h3 class="card-title">${game.Tytul}</h3>
-                            <div class="card-info-group">
-                                <p class="card-date">Premiera: ${dataText}</p>
-                                <span class="card-countdown" id="${gameId}"></span>
-                            </div>
-                            <div class="card-spacer"></div>
-                            <div class="card-footer">
-                                <p class="card-price">${cenaText}</p>
-                                <button class="card-button" data-title="${game.Tytul} (${game.Platforma || ''})">BIORE NA PREMIERE</button>
+                            <div style="flex-grow:1"></div>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div class="card-price">${game.Cena} zł</div>
+                                <button class="card-button" onclick="openModal('${game.Tytul}')">BIORE</button>
                             </div>
                         </div>
                     `;
-                    gamesGrid.appendChild(card);
-                    
-                    if (game['Data Premiery']) {
-                        const countdownEl = document.getElementById(gameId);
-                        if (countdownEl) startCardCountdown(new Date(game['Data Premiery']), countdownEl);
-                    }
+                    document.getElementById('games-grid').appendChild(div);
                 });
-
-                document.querySelectorAll('.card-button').forEach(button => {
-                    button.addEventListener('click', (e) => openModal(e.target.getAttribute('data-title')));
-                });
-
-            } catch (error) {
-                loader.textContent = 'Błąd ładowania.';
-                console.error(error);
-            }
+            } catch (e) { console.error(e); }
         }
 
-        function startCardCountdown(targetDate, element) {
-            const update = () => {
-                const now = new Date();
-                const d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const d2 = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
-                const diffTime = d2 - d1;
-                const d = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                
-                if (d < 0) { element.innerHTML = "Dostępna!"; return; }
-                if (d === 0) { element.innerHTML = "Premiera <span class=\"days-val\">DZISIAJ</span>!"; return; }
-                const label = d === 1 ? "dzień" : "dni";
-                element.innerHTML = `Zostało: <span class="days-val">${d}</span> ${label}`;
-            };
-            update();
-            setInterval(update, 3600000);
+        function openModal(title) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('game-title-input').value = title;
+            document.getElementById('reservation-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Blokada przewijania tła
         }
 
-        function openModal(gameTitle) {
-            modal.querySelector('#modal-title').textContent = gameTitle;
-            modal.querySelector('#game-title-input').value = gameTitle;
-            modal.style.display = 'block';
-        }
+        document.querySelector('.close-btn').onclick = () => {
+            document.getElementById('reservation-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
 
-        function closeModal() { modal.style.display = 'none'; document.getElementById('reservation-form').reset(); }
-        document.querySelector('.close-btn').addEventListener('click', closeModal);
-        window.addEventListener('click', (e) => { if (e.target == modal) closeModal(); });
-
-        document.getElementById('reservation-form').addEventListener('submit', async (e) => {
+        document.getElementById('reservation-form').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submit-reservation');
+            btn.disabled = true;
+            btn.innerText = "WYSYŁANIE...";
+
             const formData = new URLSearchParams();
             formData.append('tytul', document.getElementById('game-title-input').value);
             formData.append('imie', document.getElementById('customer-name').value);
             formData.append('telefon', document.getElementById('customer-phone').value);
             formData.append('email', document.getElementById('customer-email').value);
-            btn.disabled = true;
-            btn.textContent = 'Wysyłanie...';
+
             try {
                 await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: formData });
-                alert('Dziękujemy! Twoja rezerwacja została zapisana.');
-                closeModal();
-            } catch (error) {
-                alert('Wystąpił błąd.');
+                alert('Dziękujemy! Rezerwacja została zapisana.');
+                document.getElementById('reservation-modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+                document.getElementById('reservation-form').reset();
+            } catch (err) {
+                alert('Błąd wysyłania. Spróbuj ponownie.');
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Potwierdzam Rezerwację';
+                btn.innerText = "ZAMAWIAM";
             }
-        });
-        
+        };
+
         fetchSiteData();
     </script>
 </body>
