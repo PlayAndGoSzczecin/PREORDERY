@@ -154,7 +154,7 @@
             <p class="sub-headline">Zarezerwuj kopię dla siebie, póki jest dostępna.</p>
         </section>
 
-        <div id="loader">Ładowanie ofert...</div>
+        <div id="loader">Ładowanie najnowszych ofert...</div>
         <div id="games-grid" class="games-grid"></div>
     </div>
 
@@ -176,8 +176,8 @@
     </div>
 
     <script>
-        // TWOJA KONFIGURACJA Z PRAWIDŁOWYM LINKIEM
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzflLazzCVjCXN1g_ewSi8LVWXJvzrfzW44Dhg4yMSDBnvkZiP5Bz0vNRi-HCSmLcEYJQ/exec'; 
+        // TWÓJ NAJNOWSZY LINK
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwABIpsJVPVKHBHIjeGC3iBMoggxaSSGYnazglNdIxuAE4-JQErYANWxoa6ylvvZo3caA/exec'; 
 
         async function fetchSiteData() {
             try {
@@ -221,7 +221,7 @@
                     }
                 });
             } catch (e) {
-                document.getElementById('loader').innerText = "Błąd połączenia z bazą danych.";
+                document.getElementById('loader').innerText = "Błąd połączenia. Spróbuj odświeżyć stronę.";
                 console.error(e);
             }
         }
@@ -253,6 +253,13 @@
             document.body.style.overflow = 'auto';
         };
 
+        window.onclick = (e) => {
+            if (e.target == document.getElementById('reservation-modal')) {
+                document.getElementById('reservation-modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        };
+
         document.getElementById('reservation-form').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submit-reservation');
@@ -266,20 +273,22 @@
                 email: document.getElementById('customer-email').value
             });
 
-            // Wysyłamy dane jako parametry URL (najskuteczniejsza metoda dla Google Apps Script)
             const finalUrl = WEB_APP_URL + "?" + params.toString();
 
             try {
+                // Fetch GET - najstabilniejszy dla Google Apps Script na mobile
                 await fetch(finalUrl, { 
-                    method: 'POST', 
+                    method: 'GET', 
                     mode: 'no-cors' 
                 });
-                alert('Dziękujemy! Rezerwacja została zapisana.');
+
+                alert('Dziękujemy! Twoja rezerwacja została zapisana.');
                 document.getElementById('reservation-modal').style.display = 'none';
                 document.body.style.overflow = 'auto';
                 document.getElementById('reservation-form').reset();
             } catch (err) {
-                alert('Błąd połączenia. Spróbuj ponownie.');
+                alert('Wystąpił błąd. Spróbuj ponownie.');
+                console.error(err);
             } finally {
                 btn.disabled = false;
                 btn.innerText = "ZAMAWIAM PREORDER";
