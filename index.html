@@ -65,11 +65,27 @@
                 data.games.forEach(game => {
                     const card = document.createElement('div');
                     card.className = 'game-card';
-                    card.innerHTML = `<img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450?text=Brak+Okładki'"><div class="card-body"><span class="platform">${game.Platforma}</span><div class="title">${game.Tytul}</div><div class="price">${game.Cena} zł</div><button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">BIORE</button></div>`;
+                    
+                    // Logika przycisku
+                    let buttonHtml = `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">BIORE</button>`;
+                    if (game.Dostepne <= 0) {
+                        buttonHtml = `<button class="btn" style="background:#555; cursor:not-allowed;" disabled>WYPRZEDANE</button>`;
+                    }
+
+                    card.innerHTML = `
+                        <img src="${game.OkladkaURL}" class="card-img">
+                        <div class="card-body">
+                            <span class="platform">${game.Platforma}</span>
+                            <div class="title">${game.Tytul}</div>
+                            <div style="font-size:0.8rem; color:#aaa; margin-bottom:10px;">
+                                ${game.Dostepne > 0 && game.Dostepne < 10 ? 'Zostało tylko: ' + game.Dostepne + ' szt.!' : ''}
+                            </div>
+                            <div class="price">${game.Cena} zł</div>
+                            ${buttonHtml}
+                        </div>
+                    `;
                     grid.appendChild(card);
                 });
-            } catch (e) {}
-        }
 
         function openModal(t) { 
             document.getElementById('modalTitle').innerText = t; 
