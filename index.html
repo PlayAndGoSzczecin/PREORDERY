@@ -114,35 +114,46 @@
                     };
                 }
 
-                document.getElementById('loader').style.display = 'none';
-                const grid = document.getElementById('games-grid');
+                document.getElementById('resForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalBtnText = btn.innerText;
+            
+            btn.disabled = true;
+            btn.innerText = "WYSYŁANIE...";
+
+            const p = new URLSearchParams({
+                tytul: document.getElementById('gameTitle').value,
+                imie: document.getElementById('custName').value,
+                telefon: document.getElementById('custPhone').value,
+                email: document.getElementById('custEmail').value
+            });
+
+            try {
+                // Używamy trybu cors, aby przeglądarka mobilna lepiej obsłużyła odpowiedź
+                await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
                 
-                data.games.forEach(game => {
-                    const rawId = (game.Tytul + (game.Platforma || '')).replace(/[^a-zA-Z0-9]/g, '-');
-                    const countdownId = `timer-${rawId}`;
-                    const formattedDate = game['Data Premiery'] ? new Date(game['Data Premiery']).toLocaleDateString('pl-PL') : 'Wkrótce';
+                // ZAMIAST ALERTU: Zmieniamy tekst przycisku na zielone potwierdzenie
+                btn.style.background = "#28a745";
+                btn.innerText = "ZAREZERWOWANO POMYŚLNIE!";
+                
+                // Po 3 sekundach zamykamy okno i resetujemy formularz
+                setTimeout(() => {
+                    closeModal();
+                    document.getElementById('resForm').reset();
+                    btn.style.background = ""; // powrót do czerwonego
+                    btn.innerText = originalBtnText;
+                    btn.disabled = false;
+                    // Dodatkowe powiadomienie, jeśli przeglądarka na to pozwoli
+                    alert('Rezerwacja przyjęta! Sprawdź swój e-mail.');
+                }, 2500);
 
-                    const card = document.createElement('div');
-                    card.className = 'game-card';
-                    card.innerHTML = `
-                        <img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450?text=Brak+Okładki'">
-                        <div class="card-body">
-                            <span class="platform">${game.Platforma || 'GRA'}</span>
-                            <div class="title">${game.Tytul}</div>
-                            <div class="date-info">Premiera: ${formattedDate}</div>
-                            <div class="countdown" id="${countdownId}"></div>
-                            <div class="price">${game.Cena || 'TBA'} zł</div>
-                            <button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">BIORE NA PREMIERE</button>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-
-                    if (game['Data Premiery']) {
-                        updateTimer(new Date(game['Data Premiery']), countdownId);
-                    }
-                });
-            } catch (e) { document.getElementById('loader').innerText = "Błąd połączenia."; }
-        }
+            } catch (err) {
+                btn.style.background = "#ff4444";
+                btn.innerText = "BŁĄD. SPRÓBUJ PONOWNIE";
+                btn.disabled = false;
+            }
+        };
 
         function updateTimer(targetDate, elementId) {
             const el = document.getElementById(elementId);
