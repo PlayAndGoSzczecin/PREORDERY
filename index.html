@@ -7,93 +7,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #00aaff; --bg: #0d1117; --card: #161b22; --text: #e0e0e0; }
-        
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            margin: 0; 
-            background-color: var(--bg); 
-            color: var(--text); 
-            min-height: 100vh; 
-            overflow-x: hidden;
-            background-repeat: no-repeat;
-            background-position: center center; 
-            background-attachment: fixed; 
-            background-size: cover;
-            transition: background-image 0.5s ease-in-out;
-        }
-        
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); z-index: -1;
-        }
-
+        body { font-family: 'Poppins', sans-serif; margin: 0; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; background-repeat: no-repeat; background-position: center center; background-attachment: fixed; background-size: cover; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; }
         .container { max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
         nav { text-align: center; padding: 20px 0; font-size: 2rem; font-weight: 800; color: #fff; text-shadow: 0 0 10px var(--primary); letter-spacing: 2px; }
-        
-        .header-section { 
-            text-align: center; background: rgba(0,0,0,0.7); padding: 30px 15px; 
-            border-radius: 20px; margin: 20px auto 40px; max-width: 800px; 
-            border: 1px solid #333; backdrop-filter: blur(10px);
-        }
-        .header-section h1 { font-size: clamp(1.5rem, 6vw, 2.5rem); margin: 0; text-transform: uppercase; }
-
+        .header-section { text-align: center; background: rgba(0,0,0,0.7); padding: 30px 15px; border-radius: 20px; margin: 20px auto 40px; max-width: 800px; border: 1px solid #333; backdrop-filter: blur(10px); }
         .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        
-        .game-card { 
-            background: var(--card); border-radius: 18px; overflow: hidden; 
-            position: relative; height: 480px; border: 1px solid #333; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        }
-        .game-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,170,255,0.3); }
-        
-        .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); position: absolute; z-index: 0; }
-        
-        .card-body { 
-            position: relative; z-index: 1; padding: 25px; height: 100%; 
-            display: flex; flex-direction: column; box-sizing: border-box;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 30%, transparent 100%);
-        }
-        
-        .platform { background: var(--primary); color: #fff; padding: 4px 12px; border-radius: 5px; font-size: 0.7rem; font-weight: 800; align-self: flex-start; text-transform: uppercase; }
-        .title { font-size: 1.8rem; font-weight: 800; color: #fff; margin: 15px 0 5px; line-height: 1.1; }
-        
-        .date-info { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 5px; }
-        .countdown { font-size: 1rem; font-weight: 700; color: #fff; }
-        .days-highlight { color: var(--primary); font-size: 1.2rem; }
-
+        .game-card { background: var(--card); border-radius: 18px; overflow: hidden; position: relative; height: 480px; border: 1px solid #333; transition: 0.4s; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); position: absolute; }
+        .card-body { position: relative; z-index: 1; padding: 25px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.9) 30%, transparent 100%); }
+        .platform { background: var(--primary); color: #fff; padding: 4px 12px; border-radius: 5px; font-size: 0.7rem; font-weight: 800; align-self: flex-start; }
+        .title { font-size: 1.8rem; font-weight: 800; color: #fff; margin: 15px 0 5px; }
         .price { font-size: 2rem; font-weight: 800; color: var(--primary); margin-top: auto; }
         .btn { background: #ff4444; color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; text-transform: uppercase; }
-
+        
         .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px); }
-        .modal-content { background: var(--card); margin: 10% auto; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--primary); box-sizing: border-box; position: relative; }
+        .modal-content { background: var(--card); margin: 10% auto; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--primary); position: relative; }
         input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #222; color: #fff; box-sizing: border-box; font-family: inherit; }
-        .close { position: absolute; right: 20px; top: 15px; color: #fff; font-size: 30px; cursor: pointer; }
-
-        #loader { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--primary); font-weight: 600; }
+        #successMessage { display: none; background: #28a745; color: white; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; margin-bottom: 15px; }
     </style>
 </head>
 <body>
     <div class="container">
         <nav>PLAY&GO</nav>
-        <div class="header-section">
-            <h1>Nadchodzące premiery.</h1>
-            <p style="margin-top:10px; opacity:0.8">Zarezerwuj kopię dla siebie, póki jest dostępna.</p>
-        </div>
-        <div id="loader">Wczytywanie danych...</div>
+        <div class="header-section"><h1>Nadchodzące premiery.</h1></div>
+        <div id="loader" style="text-align:center">Wczytywanie...</div>
         <div id="games-grid" class="games-grid"></div>
     </div>
 
     <div id="resModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle" style="color:#fff; margin:0 0 20px 0; font-size:1.3rem;">Rezerwacja</h2>
-            <form id="resForm">
-                <input type="hidden" id="gameTitle">
-                <input type="text" id="custName" placeholder="Imię i Nazwisko" required>
-                <input type="tel" id="custPhone" placeholder="Numer telefonu" required>
-                <input type="email" id="custEmail" placeholder="Adres E-mail" required>
-                <button type="submit" id="submitBtn" class="btn">POTWIERDZAM REZERWACJĘ</button>
-            </form>
+            <div id="successMessage">REZERWACJA ZAPISANA! Sprawdź e-mail.</div>
+            <span style="position:absolute; right:20px; top:15px; color:#fff; font-size:30px; cursor:pointer;" onclick="closeModal()">&times;</span>
+            <div id="formContainer">
+                <h2 id="modalTitle" style="color:#fff; margin-bottom:20px;">Rezerwacja</h2>
+                <form id="resForm">
+                    <input type="hidden" id="gameTitle">
+                    <input type="text" id="custName" placeholder="Imię i Nazwisko" required>
+                    <input type="tel" id="custPhone" placeholder="Numer telefonu" required>
+                    <input type="email" id="custEmail" placeholder="Adres E-mail" required>
+                    <button type="submit" id="submitBtn" class="btn">POTWIERDZAM REZERWACJĘ</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -104,100 +59,53 @@
             try {
                 const res = await fetch(URL);
                 const data = await res.json();
-                
-                // --- ŁADOWANIE TŁA ---
-                if (data.settings && data.settings.TloStronyURL) {
-                    const img = new Image();
-                    img.src = data.settings.TloStronyURL;
-                    img.onload = () => {
-                        document.body.style.backgroundImage = `url('${img.src}')`;
-                    };
-                }
-
-                document.getElementById('resForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            const originalBtnText = btn.innerText;
-            
-            btn.disabled = true;
-            btn.innerText = "WYSYŁANIE...";
-
-            const p = new URLSearchParams({
-                tytul: document.getElementById('gameTitle').value,
-                imie: document.getElementById('custName').value,
-                telefon: document.getElementById('custPhone').value,
-                email: document.getElementById('custEmail').value
-            });
-
-            try {
-                // Używamy trybu cors, aby przeglądarka mobilna lepiej obsłużyła odpowiedź
-                await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
-                
-                // ZAMIAST ALERTU: Zmieniamy tekst przycisku na zielone potwierdzenie
-                btn.style.background = "#28a745";
-                btn.innerText = "ZAREZERWOWANO POMYŚLNIE!";
-                
-                // Po 3 sekundach zamykamy okno i resetujemy formularz
-                setTimeout(() => {
-                    closeModal();
-                    document.getElementById('resForm').reset();
-                    btn.style.background = ""; // powrót do czerwonego
-                    btn.innerText = originalBtnText;
-                    btn.disabled = false;
-                    // Dodatkowe powiadomienie, jeśli przeglądarka na to pozwoli
-                    alert('Rezerwacja przyjęta! Sprawdź swój e-mail.');
-                }, 2500);
-
-            } catch (err) {
-                btn.style.background = "#ff4444";
-                btn.innerText = "BŁĄD. SPRÓBUJ PONOWNIE";
-                btn.disabled = false;
-            }
-        };
-
-        function updateTimer(targetDate, elementId) {
-            const el = document.getElementById(elementId);
-            const update = () => {
-                const now = new Date();
-                const d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const d2 = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
-                const diff = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
-                
-                if (diff < 0) { el.innerHTML = "Dostępna!"; return; }
-                if (diff === 0) { el.innerHTML = "Premiera <span class='days-highlight'>DZISIAJ</span>!"; return; }
-                el.innerHTML = `Zostało: <span class='days-highlight'>${diff}</span> ${diff === 1 ? 'dzień' : 'dni'}`;
-            };
-            update();
+                if (data.settings?.TloStronyURL) document.body.style.backgroundImage = `url('${data.settings.TloStronyURL}')`;
+                document.getElementById('loader').style.display = 'none';
+                const grid = document.getElementById('games-grid');
+                data.games.forEach(game => {
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    card.innerHTML = `<img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450?text=Brak+Okładki'"><div class="card-body"><span class="platform">${game.Platforma}</span><div class="title">${game.Tytul}</div><div class="price">${game.Cena} zł</div><button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">BIORE</button></div>`;
+                    grid.appendChild(card);
+                });
+            } catch (e) {}
         }
 
-        function openModal(t) {
-            document.getElementById('modalTitle').innerText = t;
-            document.getElementById('gameTitle').value = t;
-            document.getElementById('resModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
+        function openModal(t) { 
+            document.getElementById('modalTitle').innerText = t; 
+            document.getElementById('gameTitle').value = t; 
+            document.getElementById('resModal').style.display = 'block'; 
         }
-
-        function closeModal() { document.getElementById('resModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        
+        function closeModal() { 
+            document.getElementById('resModal').style.display = 'none'; 
+            document.getElementById('successMessage').style.display = 'none'; 
+            document.getElementById('formContainer').style.display = 'block'; 
+        }
 
         document.getElementById('resForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerText = "WYSYŁANIE...";
+            btn.disabled = true; btn.innerText = "WYSYŁANIE...";
+
             const p = new URLSearchParams({
                 tytul: document.getElementById('gameTitle').value,
                 imie: document.getElementById('custName').value,
                 telefon: document.getElementById('custPhone').value,
                 email: document.getElementById('custEmail').value
             });
+
             try {
                 await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
-                alert('Dziękujemy! Rezerwacja zapisana.');
-                closeModal();
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                setTimeout(closeModal, 3500);
                 document.getElementById('resForm').reset();
-            } catch (err) { alert('Błąd połączenia.'); } finally { btn.disabled = false; btn.innerText = "POTWIERDZAM"; }
+            } catch (err) {
+                alert('Błąd połączenia.');
+                btn.disabled = false; btn.innerText = "POTWIERDZAM REZERWACJĘ";
+            }
         };
-
         loadData();
     </script>
 </body>
