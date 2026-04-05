@@ -41,17 +41,29 @@
         }
 
         .header-section { 
-            text-align: center; 
-            background: rgba(0,0,0,0.7); 
-            padding: 30px 15px; 
-            border-radius: 20px; 
-            margin: 20px auto 40px; 
-            max-width: 800px; 
-            border: 1px solid #333; 
-            backdrop-filter: blur(10px); 
-        }
-        .header-section h1 { margin: 0; font-size: 2rem; color: #fff; }
-
+    text-align: center; 
+    background: rgba(0,0,0,0.7); 
+    padding: 30px 15px; 
+    border-radius: 20px; 
+    margin: 20px auto 40px; 
+    max-width: 800px; 
+    border: 1px solid #333; 
+    backdrop-filter: blur(10px); 
+}
+.header-section h1 { 
+    margin: 0; 
+    font-size: 2.2rem; 
+    color: #fff; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.subtitle {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: var(--primary); /* Twój jasnoniebieski kolor */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
         #loader { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--primary); }
 
         .games-grid { 
@@ -163,9 +175,10 @@
     <div class="container">
         <nav>PLAY&GO</nav>
         
-        <div class="header-section">
-            <h1>Nadchodzące premiery.</h1>
-        </div>
+       <div class="header-section">
+    <h1>Nadchodzące premiery.</h1>
+    <p class="subtitle">Kliknij i zamów, zanim ktoś Cię ubiegnie!</p>
+</div>
 
         <div id="loader">Wczytywanie ofert...</div>
         <div id="games-grid" class="games-grid"></div>
