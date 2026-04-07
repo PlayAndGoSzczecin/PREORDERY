@@ -238,6 +238,12 @@
             <div id="formContainer">
                 <h2 id="modalTitle" style="color:#fff; margin-top:0; font-size:1.8rem;">Rezerwacja</h2>
                 <form id="resForm">
+                    <div style="display:none;">
+    <input type="text" id="robotCheck" name="robotCheck" tabindex="-1" autocomplete="off">
+</div>
+
+<p style="font-size:0.8rem; color:#aaa; margin:10px 0 0;">Udowodnij, że nie jesteś botem:</p>
+<input type="text" id="humanVerify" placeholder="Ile to jest 2 + 2?" required>
                     <input type="hidden" id="gameTitle">
                     <input type="text" id="custName" placeholder="Imię i Nazwisko" required>
                     <input type="tel" id="custPhone" placeholder="Twój numer telefonu" required>
