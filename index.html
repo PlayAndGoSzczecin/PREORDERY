@@ -97,6 +97,23 @@
                 data.games.forEach(game => {
                     const card = document.createElement('div');
                     card.className = 'game-card';
+                    
+                    // --- LOGIKA DATY I ODLICZANIA (To wróciło!) ---
+                    let dataTekst = "Wkrótce";
+                    let countdownTekst = "";
+                    
+                    if (game.DataPremiery) {
+                        const dPremiera = new Date(game.DataPremiery);
+                        dataTekst = dPremiera.toLocaleDateString('pl-PL');
+                        const teraz = new Date();
+                        const diff = Math.ceil((dPremiera - teraz) / (1000 * 60 * 60 * 24));
+                        
+                        if (diff > 0) countdownTekst = `Zostało: <span style="color:var(--primary)">${diff} dni</span>`;
+                        else if (diff === 0) countdownTekst = "Premiera DZISIAJ!";
+                        else countdownTekst = "Dostępna w ofercie!";
+                    }
+                    // ----------------------------------------------
+
                     let isAvailable = (game.Dostepne > 0);
                     let buttonHtml = isAvailable 
                         ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">Zabawię się w sapera i zamówię</button>`
@@ -107,6 +124,8 @@
                         <div class="card-body">
                             <span style="background:var(--primary); color:#fff; padding:5px 10px; border-radius:5px; font-size:0.7rem; font-weight:800; align-self:flex-start; margin-bottom:10px;">${game.Platforma}</span>
                             <div class="title">${game.Tytul}</div>
+                            <div class="date-info" style="font-size:0.85rem; opacity:0.8;">Premiera: ${dataTekst}</div>
+                            <div class="countdown" style="font-size:0.9rem; font-weight:700; margin-bottom:15px;">${countdownTekst}</div>
                             <div class="price">${game.Cena} zł</div>
                             ${buttonHtml}
                         </div>
@@ -115,7 +134,6 @@
                 });
             } catch (e) { document.getElementById('loader').innerText = "Błąd połączenia z bazą."; }
         }
-
         function openModal(t) {
             // Losowanie pytania Anty-Bot
             const n1 = Math.floor(Math.random() * 9) + 1;
