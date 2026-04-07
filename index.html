@@ -323,30 +323,45 @@
             document.getElementById('formContainer').style.display = 'block'; 
         }
 
-        document.getElementById('resForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true; btn.innerText = "PRZETWARZANIE...";
+       document.getElementById('resForm').onsubmit = async (e) => {
+    e.preventDefault();
+    
+    // 1. Sprawdź pułapkę (Honeypot)
+    const botFill = document.getElementById('robotCheck').value;
+    if (botFill !== "") {
+        console.warn("Wykryto bota!");
+        return; // Zatrzymujemy wysyłkę, bot myśli, że wysłał, a my go ignorujemy
+    }
 
-            const p = new URLSearchParams({
-                tytul: document.getElementById('gameTitle').value,
-                imie: document.getElementById('custName').value,
-                telefon: document.getElementById('custPhone').value,
-                email: document.getElementById('custEmail').value
-            });
+    // 2. Sprawdź pytanie kontrolne
+    const humanAnswer = document.getElementById('humanVerify').value.trim();
+    if (humanAnswer !== "4") {
+        alert("Błędny wynik działania! Spróbuj ponownie.");
+        return;
+    }
 
-            try {
-                await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
-                document.getElementById('formContainer').style.display = 'none';
-                document.getElementById('successMessage').style.display = 'block';
-                setTimeout(closeModal, 4000);
-            } catch (err) {
-                alert('Błąd połączenia z serwerem.');
-                btn.disabled = false;
-                btn.innerText = "POTWIERDZAM REZERWACJĘ";
-            }
-        };
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; 
+    btn.innerText = "PRZETWARZANIE...";
 
+    const p = new URLSearchParams({
+        tytul: document.getElementById('gameTitle').value,
+        imie: document.getElementById('custName').value,
+        telefon: document.getElementById('custPhone').value,
+        email: document.getElementById('custEmail').value
+    });
+
+    try {
+        await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+        setTimeout(closeModal, 4000);
+    } catch (err) {
+        alert('Błąd połączenia.');
+        btn.disabled = false;
+        btn.innerText = "POTWIERDZAM REZERWACJĘ";
+    }
+};
         loadData();
     </script>
 </body>
