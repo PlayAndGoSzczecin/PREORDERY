@@ -63,6 +63,13 @@
                     <p id="captchaQuestion" style="font-size:0.8rem; color:var(--primary); margin:15px 0 5px; font-weight:700;"></p>
                     <input type="number" id="humanVerify" placeholder="Twój wynik" required>
                     
+                    <div style="margin: 15px 0; font-size: 0.8rem; color: #bbb; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
+                        <input type="checkbox" id="privacyCheck" style="width: 18px; height: 18px; margin-top: 2px; cursor: pointer;" required>
+                        <label for="privacyCheck" style="cursor: pointer; line-height: 1.4;">
+                            Zapoznałem się z <a href="https://playandgo.pl/polityka-prywatnosci" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">Polityką Prywatności</a> i wyrażam zgodę na przetwarzanie moich danych w celu realizacji rezerwacji.
+                        </label>
+                    </div>
+
                     <button type="submit" id="submitBtn" class="btn">POTWIERDZAM REZERWACJĘ</button>
                 </form>
             </div>
@@ -74,7 +81,6 @@
     </footer>
 
     <script>
-        // TUTAJ WKLEJ SWÓJ NOWY LINK ZE SKRYPTU GOOGLE:
         const URL = 'https://script.google.com/macros/s/AKfycbwsJjTVyPk8yxmEDVYsnlrbRRD6LXddvt_eoAig5e-x3BwsswPFcFzbCRy58Jr1uUNa_A/exec';
         
         let correctCaptchaAnswer = 0;
@@ -84,7 +90,6 @@
                 const res = await fetch(URL);
                 const data = await res.json();
                 
-                // Obsługa tła i licznika
                 if (data.settings) {
                     if (data.settings.TloStronyURL) document.body.style.backgroundImage = `url('${data.settings.TloStronyURL}')`;
                     if (data.settings.Licznik) document.getElementById('visitor-count').innerText = data.settings.Licznik;
@@ -98,7 +103,6 @@
                     const card = document.createElement('div');
                     card.className = 'game-card';
                     
-                    // --- LOGIKA DATY I ODLICZANIA (To wróciło!) ---
                     let dataTekst = "Wkrótce";
                     let countdownTekst = "";
                     
@@ -112,7 +116,6 @@
                         else if (diff === 0) countdownTekst = "Premiera DZISIAJ!";
                         else countdownTekst = "Dostępna w ofercie!";
                     }
-                    // ----------------------------------------------
 
                     let isAvailable = (game.Dostepne > 0);
                     let buttonHtml = isAvailable 
@@ -134,8 +137,8 @@
                 });
             } catch (e) { document.getElementById('loader').innerText = "Błąd połączenia z bazą."; }
         }
+
         function openModal(t) {
-            // Losowanie pytania Anty-Bot
             const n1 = Math.floor(Math.random() * 9) + 1;
             const n2 = Math.floor(Math.random() * 9) + 1;
             correctCaptchaAnswer = n1 + n2;
@@ -150,6 +153,11 @@
 
         document.getElementById('resForm').onsubmit = async (e) => {
             e.preventDefault();
+            
+            if (!document.getElementById('privacyCheck').checked) {
+                alert("Musisz zaakceptować politykę prywatności, aby kontynuować.");
+                return;
+            }
             if (document.getElementById('robotCheck').value !== "") return;
             if (parseInt(document.getElementById('humanVerify').value) !== correctCaptchaAnswer) {
                 alert("Błędny wynik! Spróbuj ponownie.");
