@@ -30,28 +30,43 @@
         /* Baner specjalny */
         .featured-banner {
             grid-column: 1 / -1; 
-            height: 260px; 
+            height: 320px; /* Zwiększona wysokość dla większego tekstu */
             background-size: cover;
             background-position: center;
             border-radius: 22px;
             position: relative;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 2px solid #ff0000;
             margin-top: 20px;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
         }
         .banner-overlay {
-            background: linear-gradient(to right, rgba(0,0,0,0.95) 40%, transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%);
             width: 100%;
             height: 100%;
-            padding: 30px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center; /* Centrowanie treści */
+            text-align: center;
             box-sizing: border-box;
         }
-        .banner-price { font-size: 2.8rem; font-weight: 800; color: var(--primary); }
+
+        .featured-banner .title {
+            font-size: 3.5rem !important; /* Powiększenie o ok. 50% */
+            width: 100%;
+            margin: 5px 0;
+            text-transform: uppercase;
+            color: #fff;
+            /* Czerwona poświata neonowa */
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 2px 2px 5px #000;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .banner-price { font-size: 3.2rem; font-weight: 800; color: var(--primary); text-shadow: 0 0 15px rgba(0,170,255,0.4); }
 
         footer { text-align: center; padding: 40px 20px; color: #666; font-size: 0.85rem; letter-spacing: 1px; }
         #visitor-count { color: var(--primary); font-weight: bold; font-size: 1rem; }
@@ -145,15 +160,20 @@
                         banner.className = 'featured-banner';
                         banner.style.backgroundImage = `url('${game.OkladkaURL}')`;
                         
-                        // Pobieramy dodatkowy opis z Arkusza (kolumna "Opis")
                         const dodatkowyInfo = game.Opis || "";
 
                         banner.innerHTML = `
                             <div class="banner-overlay">
-                                <span style="background:var(--primary); color:#fff; padding:5px 12px; border-radius:5px; font-size:0.8rem; font-weight:800; align-self:flex-start; margin-bottom:10px;">${game.Platforma} - POLECANE</span>
-                                <div class="title" style="font-size: 2.2rem; margin-bottom: 5px;">${game.Tytul}</div>
-                                <div style="font-size: 1.1rem; color: #fff; margin-bottom: 15px; font-weight: 400; max-width: 700px; line-height: 1.4;">${dodatkowyInfo}</div>
-                                <div style="font-size:1rem; opacity:0.8;">Premiera: ${dataTekst} | ${countdownTekst}</div>
+                                <span style="background:#ff0000; color:#fff; padding:5px 15px; border-radius:5px; font-size:0.9rem; font-weight:800; align-self:center; margin-bottom:15px; box-shadow: 0 0 10px rgba(255,0,0,0.5);">
+                                    ${game.Platforma} - POLECANE
+                                </span>
+                                <div class="title">${game.Tytul}</div>
+                                <div style="font-size: 1.4rem; color: #fff; margin: 10px auto 15px; font-weight: 400; max-width: 90%; line-height: 1.4; text-shadow: 1px 1px 5px #000;">
+                                    ${dodatkowyInfo}
+                                </div>
+                                <div style="font-size:1.1rem; opacity:0.9; margin-bottom: 10px; text-shadow: 1px 1px 3px #000;">
+                                    📅 Premiera: <strong>${dataTekst}</strong> | ⏳ ${countdownTekst}
+                                </div>
                                 <div class="banner-price">${game.Cena} zł</div>
                             </div>
                         `;
