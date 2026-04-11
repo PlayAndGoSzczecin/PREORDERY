@@ -75,6 +75,24 @@
         input { width: 100%; padding: 16px; margin: 10px 0; border-radius: 14px; border: 1px solid #333; background: #1a1f26; color: #fff; font-family: 'Poppins'; }
         #successMessage { display: none; background: #28a745; color: white; padding: 25px; border-radius: 20px; text-align: center; font-weight: 800; }
         .close-btn { position: absolute; right: 25px; top: 20px; color: #fff; font-size: 40px; cursor: pointer; }
+        /* Poprawka dla telefonów */
+@media (max-width: 768px) {
+    .featured-banner {
+        height: auto; /* Pozwalamy banerowi urosnąć w pionie, jeśli tekst jest długi */
+        min-height: 350px;
+    }
+    .featured-banner .title {
+        font-size: 2.2rem !important; /* Na telefonie zmniejszamy z 3.5 na 2.2 */
+        line-height: 1.1;
+        margin-top: 10px;
+    }
+    .banner-overlay {
+        padding: 20px; /* Mniejsze marginesy na telefonie */
+    }
+    .banner-price {
+        font-size: 2.4rem; /* Cena też deczko mniejsza na telefonie */
+    }
+}
     </style>
 </head>
 <body>
