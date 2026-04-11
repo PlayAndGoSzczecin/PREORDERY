@@ -129,42 +129,44 @@
                 const grid = document.getElementById('games-grid');
                 grid.innerHTML = '';
 
-                data.games.forEach(game => {
-                    const card = document.createElement('div');
-                    card.className = 'game-card';
-                    
-                    let dataTekst = "Wkrótce";
-                    let countdownTekst = "";
-                    
-                    if (game.DataPremiery) {
-                        const dPremiera = new Date(game.DataPremiery);
-                        dataTekst = dPremiera.toLocaleDateString('pl-PL');
-                        const teraz = new Date();
-                        const diff = Math.ceil((dPremiera - teraz) / (1000 * 60 * 60 * 24));
-                        
-                        if (diff > 0) countdownTekst = `Zostało: <span style="color:var(--primary)">${diff} dni</span>`;
-                        else if (diff === 0) countdownTekst = "Premiera DZISIAJ!";
-                        else countdownTekst = "Dostępna w ofercie!";
-                    }
+                // Zamiast data.games.forEach(game => { ... użyjemy pętli for, żeby złapać ostatni element
+for (let i = 0; i < data.games.length; i++) {
+    const game = data.games[i];
+    
+    // Obliczenia daty (skopiowane z Twojego kodu)
+    let dataTekst = "Wkrótce";
+    let countdownTekst = "";
+    if (game.DataPremiery) {
+        const dPremiera = new Date(game.DataPremiery);
+        dataTekst = dPremiera.toLocaleDateString('pl-PL');
+        const teraz = new Date();
+        const diff = Math.ceil((dPremiera - teraz) / (1000 * 60 * 60 * 24));
+        if (diff > 0) countdownTekst = `Zostało: <span style="color:var(--primary)">${diff} dni</span>`;
+        else if (diff === 0) countdownTekst = "Premiera DZISIAJ!";
+    }
 
-                    let isAvailable = (game.Dostepne > 0);
-                    let buttonHtml = isAvailable 
-                        ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">Zabawię się w sapera i zamówię</button>`
-                        : `<button class="btn" disabled>WYPRZEDANE</button>`;
-
-                    card.innerHTML = `
-                        <img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/400x600'">
-                        <div class="card-body">
-                            <span style="background:var(--primary); color:#fff; padding:5px 10px; border-radius:5px; font-size:0.7rem; font-weight:800; align-self:flex-start; margin-bottom:10px;">${game.Platforma}</span>
-                            <div class="title">${game.Tytul}</div>
-                            <div class="date-info" style="font-size:0.85rem; opacity:0.8;">Premiera: ${dataTekst}</div>
-                            <div class="countdown" style="font-size:0.9rem; font-weight:700; margin-bottom:15px;">${countdownTekst}</div>
-                            <div class="price">${game.Cena} zł</div>
-                            ${buttonHtml}
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
+    // SPRAWDZAMY CZY TO OSTATNI ELEMENT (Nasz Baner)
+    if (i === data.games.length - 1) {
+        const banner = document.createElement('div');
+        banner.className = 'featured-banner';
+        banner.style.backgroundImage = `url('${game.OkladkaURL}')`;
+        banner.innerHTML = `
+            <div class="banner-overlay">
+                <span style="background:var(--primary); color:#fff; padding:5px 12px; border-radius:5px; font-size:0.8rem; font-weight:800; align-self:flex-start; margin-bottom:10px;">${game.Platforma}</span>
+                <div class="title" style="font-size: 2.2rem;">${game.Tytul}</div>
+                <div style="font-size:1rem; opacity:0.8;">Premiera: ${dataTekst} | ${countdownTekst}</div>
+                <div class="banner-price">${game.Cena} zł</div>
+            </div>
+        `;
+        grid.appendChild(banner);
+    } else {
+        // TUTAJ STANDARDOWY KOD KARTY (ten co masz obecnie)
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        // ... (wklej tutaj cały środek starej pętli generującej kartę)
+        grid.appendChild(card);
+    }
+}
             } catch (e) { document.getElementById('loader').innerText = "Błąd połączenia z bazą."; }
         }
 
