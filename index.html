@@ -24,8 +24,22 @@
         .card-body { position: relative; z-index: 1; padding: 30px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.95) 55%, transparent 100%); }
         .title { font-size: 1.8rem; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 8px; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 2px 2px 5px rgba(0,0,0,0.9); }
         
-        /* Styl dla opisu na małych kartach */
-        .card-description { font-size: 0.8rem; color: #bbb; margin-bottom: 12px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        /* Zmieniony styl opisu na kartach (Zmiana 1, 2, 3) */
+        .card-description { 
+            font-size: 1.6rem; /* 2x większy */
+            color: #fff; 
+            margin: auto 0; /* Wyśrodkowanie na środku karty (Zmiana 4) */
+            text-align: center; /* Wypośrodkowanie tekstu (Zmiana 2) */
+            line-height: 1.2; 
+            font-weight: 800;
+            text-transform: uppercase;
+            /* Czerwona poświata (Zmiana 3) */
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 1px 1px 3px #000;
+            display: -webkit-box; 
+            -webkit-line-clamp: 3; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
+        }
 
         .price { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 18px; }
         .btn { background: #ff4444; color: #fff; border: none; padding: 18px; border-radius: 16px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; transition: 0.2s; }
@@ -38,6 +52,7 @@
         @media (max-width: 768px) {
             .featured-banner { height: auto; min-height: 350px; }
             .featured-banner .title { font-size: 2.2rem !important; }
+            .card-description { font-size: 1.2rem; }
         }
 
         footer { text-align: center; padding: 40px 20px; color: #666; font-size: 0.85rem; letter-spacing: 1px; }
