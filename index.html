@@ -111,7 +111,7 @@
     </footer>
 
     <script>
-        const URL = 'https://script.google.com/macros/s/AKfycbw1r68KDSbcKhTtqihCdc0qIbZX4Wh46Eo9ZGg9K3i1LdH9sKUAp47xH59HswRnfSTZpA/exec';
+        const URL = 'https://script.google.com/macros/s/AKfycbx1r68KDSbcKhTtqihCdc0qIbZX4Wh46Eo9ZGg9K3i1LdH9sKUAp47xH59HswRnfSTZpA/exec';
         
         let correctCaptchaAnswer = 0;
         let modalOpenTime = 0;
@@ -146,15 +146,14 @@
                         else countdownTekst = "Dostępna w ofercie!";
                     }
 
-                    // POPRAWIONE OBLICZANIE PROCENTU
-                    // Zakładamy, że jeśli w Arkuszu masz Limit (np. 30), a Dostepne to 15, to zajęte jest 50%
-                    let limitGry = game.Limit || 30; // Domyślna pula jeśli brak w arkuszu
-                    let zajeteLiczba = game.Zajete || (limitGry - game.Dostepne);
-                    let procent = Math.round((zajeteLiczba / limitGry) * 100);
-                    
-                    // Jeśli jest 0 rezerwacji, dajemy 5% dla efektu "zainteresowania"
-                    if (procent < 5 && game.Dostepne > 0) procent = 5;
-                    if (procent > 98 && game.Dostepne > 0) procent = 98; // Nie pokazujemy 100% dopóki coś jest
+                    // --- POPRAWIONE OBLICZANIE PROCENTU ---
+                    let zarezerwowane = game.Zajete || 0; 
+                    let calyNaklad = game.Limit || (game.Dostepne + zarezerwowane) || 1; 
+                    let procent = Math.round((zarezerwowane / calyNaklad) * 100);
+
+                    // Bonus wizualny: Jeśli dostępność jest, ale 0 zamówień, pokaż 3% dla zachęty
+                    if (procent === 0 && game.Dostepne > 0) procent = 3;
+                    if (procent > 98 && game.Dostepne > 0) procent = 98; // Nie 100% dopóki coś jest
 
                     if (i === data.games.length - 1) {
                         const banner = document.createElement('div');
@@ -169,7 +168,7 @@
                                 <div style="font-size: 1.4rem; color: #fff; margin: 10px auto 15px; font-weight: 400; max-width: 90%; line-height: 1.4; text-shadow: 1px 1px 5px #000;">
                                     ${opisGry}
                                 </div>
-                                <div style="font-size:1.1rem; opacity:0.9; margin-bottom: 10px; text-shadow: 1px 1px 3px #000;">
+                                <div style="font-size:1.1rem; opacity:0.9; margin-top: auto; text-shadow: 1px 1px 3px #000;">
                                     📅 Premiera: <strong>${dataTekst}</strong> | ⏳ ${countdownTekst}
                                 </div>
                                 <div class="banner-price">${game.Cena} zł</div>
