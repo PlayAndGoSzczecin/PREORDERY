@@ -204,6 +204,23 @@
                                 <div style="font-size:0.85rem; opacity:0.8;">Premiera: ${dataTekst}</div>
                                 <div style="font-size:0.9rem; font-weight:700; margin-bottom:15px;">${countdownTekst}</div>
                                 <div class="price">${game.Cena} zł</div>
+                                // Wewnątrz pętli for/forEach w funkcji loadData:
+
+let procent = 0;
+let limit = game.Dostepne + zajete; // Łączna pula (dostępne + już zarezerwowane)
+if (limit > 0) {
+    procent = Math.round((zajete / limit) * 100);
+}
+
+// Ten fragment wstaw do innerHTML karty:
+let progressHtml = `
+    <div style="width: 100%; margin: 10px 0;">
+        <div class="progress-text">Zarezerwowano już ${procent}% nakładu</div>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: ${procent}%"></div>
+        </div>
+    </div>
+`;
                                 ${buttonHtml}
                             </div>
                         `;
