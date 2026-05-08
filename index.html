@@ -11,61 +11,68 @@
         :root { --primary: #00aaff; --bg: #0d1117; --card: #161b22; --text: #e0e0e0; }
         body { font-family: 'Poppins', sans-serif; margin: 0; background: var(--bg); color: var(--text); min-height: 100vh; background-size: cover; background-attachment: fixed; background-position: center; position: relative; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.65); z-index: -1; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
-        nav { text-align: center; padding: 20px 0; font-size: 2.8rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px var(--primary); letter-spacing: 4px; }
-        .header-section { text-align: center; background: rgba(0,0,0,0.75); padding: 35px 20px; border-radius: 25px; margin: 20px auto 50px; max-width: 850px; border: 1px solid #444; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .header-section h1 { margin: 0; font-size: 2.4rem; color: #fff; }
-        .subtitle { margin-top: 12px; font-size: 1.1rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 15px; box-sizing: border-box; }
+        nav { text-align: center; padding: 15px 0; font-size: 2rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px var(--primary); letter-spacing: 4px; }
         
-        .game-card { background: var(--card); border-radius: 22px; overflow: hidden; position: relative; height: 560px; border: 1px solid #333; transition: 0.3s; }
-        .game-card:hover { transform: translateY(-8px); border-color: var(--primary); }
-        .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); position: absolute; transition: 0.5s; }
-        .card-body { position: relative; z-index: 1; padding: 30px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.95) 55%, transparent 100%); }
+        .header-section { text-align: center; background: rgba(0,0,0,0.75); padding: 25px 15px; border-radius: 20px; margin: 10px auto 30px; max-width: 850px; border: 1px solid #444; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .header-section h1 { margin: 0; font-size: 1.8rem; color: #fff; }
+        .subtitle { margin-top: 8px; font-size: 0.9rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ZMIANA: Mniejszy grid dla mniejszych kafelków */
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
         
-        .title { font-size: 1.8rem; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 8px; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 2px 2px 5px rgba(0,0,0,0.9); }
+        /* ZMIANA: Zmniejszona wysokość karty i padding */
+        .game-card { background: var(--card); border-radius: 18px; overflow: hidden; position: relative; height: 420px; border: 1px solid #333; transition: 0.3s; }
+        .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); position: absolute; transition: 0.5s; }
+        .card-body { position: relative; z-index: 1; padding: 15px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.95) 60%, transparent 100%); }
         
+        /* ZMIANA: Mniejsza czcionka tytułu */
+        .title { font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 5px; text-shadow: 1px 1px 3px #000; }
+        
+        /* ZMIANA: Mniejsza czcionka opisu */
         .card-description { 
-            font-size: 1.6rem; 
+            font-size: 0.85rem; 
             color: #fff; 
-            margin: auto 0; 
+            margin: 5px 0; 
             text-align: center; 
             line-height: 1.2; 
-            font-weight: 800;
+            font-weight: 700;
             text-transform: uppercase;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 1px 1px 3px #000;
+            text-shadow: 0 0 8px #ff0000;
             display: -webkit-box; 
             -webkit-line-clamp: 3; 
             -webkit-box-orient: vertical; 
             overflow: hidden; 
         }
 
-        .price { font-size: 2.4rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 18px; }
-        .btn { background: #ff4444; color: #fff; border: none; padding: 18px; border-radius: 16px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; transition: 0.2s; }
+        /* ZMIANA: Mniejsza czcionka ceny i przycisku */
+        .price { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 10px; }
+        .btn { background: #ff4444; color: #fff; border: none; padding: 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; transition: 0.2s; }
         
-        /* Styl paska postępu FOMO */
-        .progress-container { width: 100%; background-color: rgba(255,255,255,0.1); border-radius: 10px; margin: 10px 0; height: 10px; position: relative; overflow: hidden; border: 1px solid #333; }
-        .progress-bar { height: 100%; background: linear-gradient(90deg, #ff4444, #ff0000); width: 0%; transition: width 0.8s ease-in-out; box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-        .progress-text { font-size: 0.75rem; color: #ff4444; margin-bottom: 2px; font-weight: 700; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; }
+        .progress-container { width: 100%; background-color: rgba(255,255,255,0.1); border-radius: 10px; margin: 5px 0; height: 6px; position: relative; overflow: hidden; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #ff4444, #ff0000); width: 0%; transition: width 0.8s; }
+        .progress-text { font-size: 0.65rem; color: #ff4444; margin-bottom: 2px; font-weight: 700; }
 
-        .featured-banner { grid-column: 1 / -1; height: 320px; background-size: cover; background-position: center; border-radius: 22px; position: relative; overflow: hidden; border: 2px solid #ff0000; margin-top: 20px; display: flex; align-items: center; }
-        .banner-overlay { background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%); width: 100%; height: 100%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-sizing: border-box; }
-        .featured-banner .title { font-size: 3.5rem !important; width: 100%; margin: 5px 0; text-transform: uppercase; color: #fff; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 2px 2px 5px #000; letter-spacing: 2px; line-height: 1; }
-        .banner-price { font-size: 3.2rem; font-weight: 800; color: var(--primary); text-shadow: 0 0 15px rgba(0,170,255,0.4); }
+        .featured-banner { grid-column: 1 / -1; height: 300px; background-size: cover; background-position: center; border-radius: 22px; position: relative; overflow: hidden; border: 2px solid #ff0000; display: flex; align-items: center; }
+        .banner-overlay { background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%); width: 100%; height: 100%; padding: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-sizing: border-box; }
+        .featured-banner .title { font-size: 2.2rem !important; }
+        .banner-price { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
 
         @media (max-width: 768px) {
-            .featured-banner { height: auto; min-height: 350px; }
-            .featured-banner .title { font-size: 2.2rem !important; }
-            .card-description { font-size: 1.2rem; }
+            .games-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+            .featured-banner { height: auto; min-height: 300px; }
+            .featured-banner .title { font-size: 1.6rem !important; }
+            .game-card { height: 380px; }
+            nav { font-size: 1.8rem; }
         }
 
-        footer { text-align: center; padding: 40px 20px; color: #666; font-size: 0.85rem; letter-spacing: 1px; }
-        #visitor-count { color: var(--primary); font-weight: bold; font-size: 1rem; }
+        footer { text-align: center; padding: 30px 20px; color: #666; font-size: 0.8rem; }
+        #visitor-count { color: var(--primary); font-weight: bold; }
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
-        .modal-content { background: var(--card); margin: 10vh auto; padding: 40px; border-radius: 30px; width: 90%; max-width: 440px; border: 1px solid var(--primary); position: relative; }
-        input { width: 100%; padding: 16px; margin: 10px 0; border-radius: 14px; border: 1px solid #333; background: #1a1f26; color: #fff; font-family: 'Poppins'; }
-        #successMessage { display: none; background: #28a745; color: white; padding: 25px; border-radius: 20px; text-align: center; font-weight: 800; }
-        .close-btn { position: absolute; right: 25px; top: 20px; color: #fff; font-size: 40px; cursor: pointer; }
+        .modal-content { background: var(--card); margin: 5vh auto; padding: 30px; border-radius: 25px; width: 90%; max-width: 400px; border: 1px solid var(--primary); position: relative; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #333; background: #1a1f26; color: #fff; box-sizing: border-box; }
+        .close-btn { position: absolute; right: 20px; top: 10px; color: #fff; font-size: 35px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -74,7 +81,7 @@
         <nav>PLAY&GO</nav>
         <div class="header-section">
             <h1>Nadchodzące premiery.</h1>
-            <p class="subtitle">Kliknij i zamów, zanim ktoś Cię ubiegnie!</p>
+            <p class="subtitle">Zarezerwuj swoją kopię już teraz!</p>
         </div>
         <div id="loader" style="text-align:center;">Ładowanie ofert...</div>
         <div id="games-grid" class="games-grid"></div>
@@ -83,22 +90,19 @@
     <div id="resModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="successMessage">REZERWACJA ZAPISANA!<br><small>Sprawdź maila.</small></div>
+            <div id="successMessage" style="display:none; background:#28a745; color:white; padding:20px; border-radius:15px; text-align:center;">REZERWACJA ZAPISANA!</div>
             <div id="formContainer">
-                <h2 id="modalTitle" style="color:#fff; margin-top:0;">Rezerwacja</h2>
+                <h2 id="modalTitle" style="color:#fff; margin-top:0; font-size:1.2rem;">Rezerwacja</h2>
                 <form id="resForm">
                     <input type="hidden" id="gameTitle">
                     <input type="text" id="custName" placeholder="Imię i Nazwisko" required>
                     <input type="tel" id="custPhone" placeholder="Numer telefonu" required>
                     <input type="email" id="custEmail" placeholder="Adres e-mail" required>
-                    <div style="display:none;"><input type="text" id="robotCheck"></div>
-                    <p id="captchaQuestion" style="font-size:0.8rem; color:var(--primary); margin:15px 0 5px; font-weight:700;"></p>
+                    <p id="captchaQuestion" style="font-size:0.75rem; color:var(--primary); margin:10px 0 5px; font-weight:700;"></p>
                     <input type="number" id="humanVerify" placeholder="Twój wynik" required>
-                    <div style="margin: 15px 0; font-size: 0.8rem; color: #bbb; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
-                        <input type="checkbox" id="privacyCheck" style="width: 18px; height: 18px; margin-top: 2px; cursor: pointer;" required>
-                        <label for="privacyCheck" style="cursor: pointer; line-height: 1.4;">
-                            Zapoznałem się z <a href="https://playandgo.pl/polityka-prywatnosci" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">Polityką Prywatności</a> i wyrażam zgodę na przetwarzanie danych.
-                        </label>
+                    <div style="margin: 10px 0; font-size: 0.75rem; color: #bbb; display: flex; align-items: flex-start; gap: 8px;">
+                        <input type="checkbox" id="privacyCheck" style="width: 16px; height: 16px; margin:0;" required>
+                        <label for="privacyCheck">Zgoda na przetwarzanie danych.</label>
                     </div>
                     <button type="submit" id="submitBtn" class="btn">POTWIERDZAM REZERWACJĘ</button>
                 </form>
@@ -107,7 +111,7 @@
     </div>
 
     <footer>
-        Dziękujemy za odwiedziny! Jesteś naszym <span id="visitor-count">...</span> gościem.
+        Dziękujemy! Jesteś naszym <span id="visitor-count">...</span> gościem.
     </footer>
 
     <script>
@@ -141,37 +145,28 @@
                         dataTekst = dPremiera.toLocaleDateString('pl-PL');
                         const teraz = new Date();
                         const diff = Math.ceil((dPremiera - teraz) / (1000 * 60 * 60 * 24));
-                        if (diff > 0) countdownTekst = `Zostało: <span style="color:var(--primary)">${diff} dni</span>`;
-                        else if (diff === 0) countdownTekst = "Premiera DZISIAJ!";
-                        else countdownTekst = "Dostępna w ofercie!";
+                        if (diff > 0) countdownTekst = `${diff} dni`;
+                        else if (diff === 0) countdownTekst = "Dziś!";
+                        else countdownTekst = "Dostępna!";
                     }
 
-                    // --- POPRAWIONE OBLICZANIE PROCENTU ---
                     let zarezerwowane = game.Zajete || 0; 
                     let calyNaklad = game.Limit || (game.Dostepne + zarezerwowane) || 1; 
                     let procent = Math.round((zarezerwowane / calyNaklad) * 100);
-
-                    // Bonus wizualny: Jeśli dostępność jest, ale 0 zamówień, pokaż 3% dla zachęty
                     if (procent === 0 && game.Dostepne > 0) procent = 3;
-                    if (procent > 98 && game.Dostepne > 0) procent = 98; // Nie 100% dopóki coś jest
+                    if (procent > 98 && game.Dostepne > 0) procent = 98;
 
                     if (i === data.games.length - 1) {
+                        // Banner wyróżniony (zostaje duży)
                         const banner = document.createElement('div');
                         banner.className = 'featured-banner';
                         banner.style.backgroundImage = `url('${game.OkladkaURL}')`;
                         banner.innerHTML = `
                             <div class="banner-overlay">
-                                <span style="background:#ff0000; color:#fff; padding:5px 15px; border-radius:5px; font-size:0.9rem; font-weight:800; align-self:center; margin-bottom:15px; box-shadow: 0 0 10px rgba(255,0,0,0.5);">
-                                    ${game.Platforma} - POLECANE
-                                </span>
+                                <span style="background:#ff0000; color:#fff; padding:3px 10px; border-radius:5px; font-size:0.7rem; font-weight:800; margin-bottom:10px;">POLECANE</span>
                                 <div class="title">${game.Tytul}</div>
-                                <div style="font-size: 1.4rem; color: #fff; margin: 10px auto 15px; font-weight: 400; max-width: 90%; line-height: 1.4; text-shadow: 1px 1px 5px #000;">
-                                    ${opisGry}
-                                </div>
-                                <div style="font-size:1.1rem; opacity:0.9; margin-top: auto; text-shadow: 1px 1px 3px #000;">
-                                    📅 Premiera: <strong>${dataTekst}</strong> | ⏳ ${countdownTekst}
-                                </div>
                                 <div class="banner-price">${game.Cena} zł</div>
+                                <button class="btn" style="max-width:200px" onclick="openModal('${game.Tytul} (${game.Platforma})')">ZAMÓW TERAZ</button>
                             </div>
                         `;
                         grid.appendChild(banner);
@@ -181,33 +176,32 @@
                         card.className = 'game-card';
                         let isAvailable = (game.Dostepne > 0);
                         let buttonHtml = isAvailable 
-                            ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">Zabawię się w sapera i zamówię</button>`
-                            : `<button class="btn" style="background:#555;" disabled>WYPRZEDANE</button>`;
+                            ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">REZERWUJĘ</button>`
+                            : `<button class="btn" style="background:#555;" disabled>BRAK</button>`;
 
                         card.innerHTML = `
                             <img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/400x600'">
                             <div class="card-body">
-                                <span style="background:var(--primary); color:#fff; padding:5px 10px; border-radius:5px; font-size:0.7rem; font-weight:800; align-self:flex-start; margin-bottom:10px;">${game.Platforma}</span>
+                                <span style="background:var(--primary); color:#fff; padding:2px 6px; border-radius:4px; font-size:0.6rem; font-weight:800; align-self:flex-start; margin-bottom:5px;">${game.Platforma}</span>
                                 <div class="title">${game.Tytul}</div>
                                 <div class="card-description">${opisGry}</div>
-                                <div style="font-size:0.85rem; opacity:0.8;">Premiera: ${dataTekst}</div>
-                                <div style="font-size:0.9rem; font-weight:700; margin-bottom:5px;">${countdownTekst}</div>
+                                <div style="font-size:0.7rem; opacity:0.8;">Data: ${dataTekst}</div>
+                                <div style="font-size:0.7rem; font-weight:700; margin-bottom:5px; color:var(--primary)">${countdownTekst}</div>
                                 <div class="price">${game.Cena} zł</div>
                                 
-                                <div style="width: 100%; margin: 10px 0;">
-                                    <div class="progress-text">Zarezerwowano już ${procent}% nakładu</div>
+                                <div style="width: 100%; margin-bottom: 10px;">
+                                    <div class="progress-text">${procent}% nakładu</div>
                                     <div class="progress-container">
                                         <div class="progress-bar" style="width: ${procent}%"></div>
                                     </div>
                                 </div>
-
                                 ${buttonHtml}
                             </div>
                         `;
                         grid.appendChild(card);
                     }
                 }
-            } catch (e) { document.getElementById('loader').innerText = "Błąd połączenia z bazą."; }
+            } catch (e) { document.getElementById('loader').innerText = "Błąd połączenia."; }
         }
 
         function openModal(t) {
@@ -226,14 +220,12 @@
         document.getElementById('resForm').onsubmit = async (e) => {
             e.preventDefault();
             const timeSpent = (Date.now() - modalOpenTime) / 1000;
-            if (timeSpent < 4) return;
-            const email = document.getElementById('custEmail').value.toLowerCase();
-            if (email.includes('.gov') || email.includes('.mil')) { alert("Niedozwolony adres."); return; }
-            if (!document.getElementById('privacyCheck').checked) { alert("Zaakceptuj politykę prywatności."); return; }
+            if (timeSpent < 3) return;
             if (parseInt(document.getElementById('humanVerify').value) !== correctCaptchaAnswer) { alert("Błędny wynik!"); return; }
 
             const btn = document.getElementById('submitBtn');
-            btn.disabled = true; btn.innerText = "PRZETWARZANIE...";
+            btn.disabled = true; btn.innerText = "CZEKAJ...";
+            
             const p = new URLSearchParams({
                 tytul: document.getElementById('gameTitle').value,
                 imie: document.getElementById('custName').value,
@@ -245,8 +237,8 @@
                 await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
                 document.getElementById('formContainer').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
-                setTimeout(() => { closeModal(); location.reload(); }, 3000);
-            } catch (err) { alert('Błąd połączenia.'); btn.disabled = false; }
+                setTimeout(() => { closeModal(); location.reload(); }, 2500);
+            } catch (err) { alert('Błąd.'); btn.disabled = false; }
         };
 
         loadData();
