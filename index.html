@@ -65,7 +65,7 @@
         .history-header::before { background: linear-gradient(90deg, transparent, #444); }
         .history-header::after { background: linear-gradient(90deg, #444, transparent); }
         .carousel-wrapper { position: relative; }
-        .carousel-track { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 20px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #333 transparent; -webkit-overflow-scrolling: touch; }
+        .carousel-track { display: flex; gap: 15px; overflow-x: auto; padding: 30px 5px 30px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #333 transparent; -webkit-overflow-scrolling: touch; align-items: center; }
         .carousel-track::-webkit-scrollbar { height: 5px; }
         .carousel-track::-webkit-scrollbar-track { background: transparent; }
         .carousel-track::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
@@ -75,14 +75,15 @@
         .carousel-btn.next { right: -15px; }
 
         /* KAFELEK HISTORYCZNY — mniejszy niż główne */
-        .history-card { flex: 0 0 150px; width: 150px; height: 340px; background: var(--card); border-radius: 16px; overflow: hidden; position: relative; border: 1px solid #2a2a2a; transition: 0.3s; }
-        .history-card:hover { border-color: #555; transform: translateY(-3px); }
-        .history-card .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); position: absolute; }
-        .history-card .card-body { position: relative; z-index: 1; padding: 10px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.97) 50%, transparent 100%); }
+        .history-card { flex: 0 0 150px; width: 150px; height: 340px; background: var(--card); border-radius: 16px; overflow: hidden; position: relative; border: 1px solid #2a2a2a; transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease; transform: scale(0.82); opacity: 0.6; }
+        .history-card.active { transform: scale(1); opacity: 1; border-color: var(--primary); box-shadow: 0 0 25px rgba(0,170,255,0.35); }
+        .history-card .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); position: absolute; top: 0; left: 0; border-radius: 0; }
+        .history-card .card-body { position: absolute; bottom: 0; left: 0; right: 0; z-index: 1; padding: 10px; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.97) 60%, transparent 100%); height: 60%; justify-content: flex-end; }
         .history-card .title { font-size: 0.85rem; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 4px; text-shadow: 1px 1px 2px #000; }
-        .history-card .card-description { font-size: 0.7rem; color: #fff; margin: auto 0; text-align: center; line-height: 1.15; font-weight: 800; text-transform: uppercase; text-shadow: 0 0 8px #ff0000, 1px 1px 2px #000; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .history-card .price { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 6px; }
-        .history-date { font-size: 0.65rem; opacity: 0.7; margin-bottom: 2px; }
+        .history-card .card-description { font-size: 0.7rem; color: #fff; text-align: center; line-height: 1.15; font-weight: 800; text-transform: uppercase; text-shadow: 0 0 8px #ff0000, 1px 1px 2px #000; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; }
+        .history-card .price { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin: 0; }
+        .history-card .plat-badge { background: var(--primary); color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; font-weight: 800; align-self: flex-start; margin-bottom: 4px; }
+        .history-date { font-size: 0.65rem; opacity: 0.7; margin-bottom: 4px; }
 
         @media (max-width: 768px) {
             .games-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
@@ -284,7 +285,7 @@
                             const hbody = document.createElement('div');
                             hbody.className = 'card-body';
                             hbody.innerHTML = `
-                                <span style="background:var(--primary); color:#fff; padding:2px 6px; border-radius:4px; font-size:0.6rem; font-weight:800; align-self:flex-start; margin-bottom:4px;">${platforma}</span>
+                                <span class="plat-badge">${platforma}</span>
                                 <div class="title">${tytul}</div>
                                 <div class="card-description">${opisGry}</div>
                                 <div class="history-date">Premiera: ${escapeHtml(dataTekst)}</div>
@@ -296,6 +297,8 @@
                             track.appendChild(hcard);
 
                             document.getElementById('history-section').style.display = 'block';
+                            // Zaktualizuj aktywny kafelek po dodaniu każdego elementu
+                            setTimeout(updateActiveCard, 50);
                         }
                         else {
                         // ZWYKŁE KAFELKI
@@ -420,33 +423,86 @@
         };
 
         // Dźwięk kliknięcia karuzeli
+        let audioCtx = null;
+        function getAudioCtx() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            return audioCtx;
+        }
         function playClick() {
             try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const ctx = getAudioCtx();
+                // Metaliczny klik — jak bębenek pistoletu / zamek sejfu
+                // Warstwa 1: ostry impuls (mechaniczne uderzenie)
+                const buf = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate);
+                const data = buf.getChannelData(0);
+                for (let i = 0; i < data.length; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 8);
+                }
+                const noise = ctx.createBufferSource();
+                noise.buffer = buf;
+                const noiseFilter = ctx.createBiquadFilter();
+                noiseFilter.type = 'bandpass';
+                noiseFilter.frequency.value = 3500;
+                noiseFilter.Q.value = 0.8;
+                const noiseGain = ctx.createGain();
+                noiseGain.gain.setValueAtTime(0.5, ctx.currentTime);
+                noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+                noise.connect(noiseFilter);
+                noiseFilter.connect(noiseGain);
+                noiseGain.connect(ctx.destination);
+                noise.start(ctx.currentTime);
+
+                // Warstwa 2: metaliczny ton opadający (rezonans metalu)
                 const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(1200, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                const oscGain = ctx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(280, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.1);
+                oscGain.gain.setValueAtTime(0.15, ctx.currentTime);
+                oscGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                osc.connect(oscGain);
+                oscGain.connect(ctx.destination);
                 osc.start(ctx.currentTime);
-                osc.stop(ctx.currentTime + 0.08);
+                osc.stop(ctx.currentTime + 0.1);
             } catch(e) {}
+        }
+
+        // Efekt zoom — środkowy kafelek jest aktywny (większy)
+        function updateActiveCard() {
+            const track = document.getElementById('carousel-track');
+            if (!track) return;
+            const cards = track.querySelectorAll('.history-card');
+            if (!cards.length) return;
+            const trackCenter = track.scrollLeft + track.offsetWidth / 2;
+            let closest = null;
+            let closestDist = Infinity;
+            cards.forEach(function(card) {
+                const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+                const dist = Math.abs(trackCenter - cardCenter);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closest = card;
+                }
+            });
+            cards.forEach(function(card) { card.classList.remove('active'); });
+            if (closest) closest.classList.add('active');
         }
 
         // Przyciski karuzeli
         document.getElementById('carousel-prev').addEventListener('click', function() {
             playClick();
             const track = document.getElementById('carousel-track');
-            track.scrollBy({ left: -480, behavior: 'smooth' });
+            track.scrollBy({ left: -180, behavior: 'smooth' });
         });
         document.getElementById('carousel-next').addEventListener('click', function() {
             playClick();
             const track = document.getElementById('carousel-track');
-            track.scrollBy({ left: 480, behavior: 'smooth' });
+            track.scrollBy({ left: 180, behavior: 'smooth' });
+        });
+
+        // Aktualizacja aktywnego kafelka podczas scrollowania
+        document.getElementById('carousel-track').addEventListener('scroll', function() {
+            updateActiveCard();
         });
 
         loadData();
