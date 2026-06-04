@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PLAY&GO PREORDERY</title>
+    <title>PLAY&amp;GO PREORDERY</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/wBH0Gjsw/Projekt-bez-nazwy-11.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -14,20 +14,21 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 15px; box-sizing: border-box; }
         nav { text-align: center; padding: 20px 0; font-size: 2.5rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px var(--primary); letter-spacing: 4px; }
         
-        .header-section { text-align: center; background: rgba(0,0,0,0.75); padding: 25px 15px; border-radius: 25px; margin: 10px auto 30px; max-width: 850px; border: 1px solid #444; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .header-section h1 { margin: 0; font-size: 2rem; color: #fff; }
-        .subtitle { margin-top: 10px; font-size: 1rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+        .header-section { text-align: center; background: rgba(0,0,0,0.75); padding: 30px 20px; border-radius: 25px; margin: 10px auto 30px; max-width: 850px; border: 1px solid rgba(0,170,255,0.25); backdrop-filter: blur(12px); box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,170,255,0.1), inset 0 1px 0 rgba(255,255,255,0.05); position: relative; overflow: hidden; }
+        .header-section::before { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0,170,255,0.06), transparent); animation: headerShine 4s ease-in-out infinite; pointer-events: none; }
+        @keyframes headerShine { 0% { left: -100%; } 100% { left: 200%; } }
+        .header-section h1 { margin: 0; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; background: linear-gradient(90deg, #00aaff, #a855f7, #ff4444, #00aaff); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradientFlow 4s linear infinite; }
+        @keyframes gradientFlow { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+        .subtitle { margin-top: 12px; font-size: 0.95rem; color: #aaa; font-weight: 400; letter-spacing: 0.5px; }
+        .subtitle strong { color: #fff; font-weight: 700; }
 
-        /* SIATKA: Mniejsze kafelki (min 180px zamiast 300px) */
         .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
         
-        /* KAFELEK: Zmniejszona wysokość z 560px na 440px */
         .game-card { background: var(--card); border-radius: 20px; overflow: hidden; position: relative; height: 440px; border: 1px solid #333; transition: 0.3s; }
         .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
         .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); position: absolute; transition: 0.5s; }
         .card-body { position: relative; z-index: 1; padding: 15px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.95) 55%, transparent 100%); }
         
-        /* Teksty w małych kafelkach */
         .title { font-size: 1.2rem; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 5px; text-shadow: 1px 1px 3px #000; }
         .card-description { 
             font-size: 0.9rem; 
@@ -51,11 +52,37 @@
         .progress-bar { height: 100%; background: linear-gradient(90deg, #ff4444, #ff0000); width: 0%; transition: width 0.8s ease-in-out; }
         .progress-text { font-size: 0.7rem; color: #ff4444; margin-bottom: 2px; font-weight: 700; text-align: left; text-transform: uppercase; }
 
-        /* BANNER (Ostatni element) - Przywrócone oryginalne wymiary i style */
         .featured-banner { grid-column: 1 / -1; height: 320px; background-size: cover; background-position: center; border-radius: 22px; position: relative; overflow: hidden; border: 2px solid #ff0000; margin-top: 20px; display: flex; align-items: center; }
         .banner-overlay { background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%); width: 100%; height: 100%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-sizing: border-box; }
         .featured-banner .title { font-size: 3.2rem !important; width: 100%; margin: 5px 0; text-transform: uppercase; color: #fff; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 2px 2px 5px #000; letter-spacing: 2px; line-height: 1; }
         .banner-price { font-size: 3rem; font-weight: 800; color: var(--primary); }
+
+        /* KARUZELA HISTORYCZNA */
+        .history-section { margin-top: 50px; }
+        .history-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .history-header h2 { font-size: 1.4rem; font-weight: 800; color: #fff; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+        .history-header::before, .history-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #444); }
+        .history-header::before { background: linear-gradient(90deg, transparent, #444); }
+        .history-header::after { background: linear-gradient(90deg, #444, transparent); }
+        .carousel-wrapper { position: relative; }
+        .carousel-track { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 20px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #333 transparent; -webkit-overflow-scrolling: touch; }
+        .carousel-track::-webkit-scrollbar { height: 5px; }
+        .carousel-track::-webkit-scrollbar-track { background: transparent; }
+        .carousel-track::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-60%); z-index: 10; background: rgba(0,0,0,0.7); border: 1px solid #444; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; backdrop-filter: blur(5px); }
+        .carousel-btn:hover { background: var(--primary); border-color: var(--primary); }
+        .carousel-btn.prev { left: -15px; }
+        .carousel-btn.next { right: -15px; }
+
+        /* KAFELEK HISTORYCZNY — mniejszy niż główne */
+        .history-card { flex: 0 0 150px; width: 150px; height: 340px; background: var(--card); border-radius: 16px; overflow: hidden; position: relative; border: 1px solid #2a2a2a; transition: 0.3s; }
+        .history-card:hover { border-color: #555; transform: translateY(-3px); }
+        .history-card .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); position: absolute; }
+        .history-card .card-body { position: relative; z-index: 1; padding: 10px; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; background: linear-gradient(to top, rgba(0,0,0,0.97) 50%, transparent 100%); }
+        .history-card .title { font-size: 0.85rem; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 4px; text-shadow: 1px 1px 2px #000; }
+        .history-card .card-description { font-size: 0.7rem; color: #fff; margin: auto 0; text-align: center; line-height: 1.15; font-weight: 800; text-transform: uppercase; text-shadow: 0 0 8px #ff0000, 1px 1px 2px #000; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .history-card .price { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 6px; }
+        .history-date { font-size: 0.65rem; opacity: 0.7; margin-bottom: 2px; }
 
         @media (max-width: 768px) {
             .games-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
@@ -78,31 +105,43 @@
 <body>
 
     <div class="container">
-        <nav>PLAY&GO</nav>
+        <nav>PLAY&amp;GO</nav>
         <div class="header-section">
-            <h1>Nadchodzące premiery.</h1>
-            <p class="subtitle">Kliknij i zamów, zanim ktoś Cię ubiegnie!</p>
+            <h1>🎮 Nadchodzące premiery</h1>
+            <p class="subtitle">Zarezerwuj teraz. <strong>Nie czekaj aż zabraknie.</strong></p>
         </div>
         <div id="loader" style="text-align:center;">Ładowanie ofert...</div>
         <div id="games-grid" class="games-grid"></div>
+
+        <!-- KARUZELA HISTORYCZNA — widoczna tylko gdy są dane -->
+        <div id="history-section" class="history-section" style="display:none;">
+            <div class="history-header">
+                <h2>🎮 Poprzednie premiery</h2>
+            </div>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev" id="carousel-prev" aria-label="Przewiń w lewo">&#8249;</button>
+                <div class="carousel-track" id="carousel-track"></div>
+                <button class="carousel-btn next" id="carousel-next" aria-label="Przewiń w prawo">&#8250;</button>
+            </div>
+        </div>
     </div>
 
-    <div id="resModal" class="modal">
+    <div id="resModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal()" aria-label="Zamknij">&times;</span>
             <div id="successMessage" style="display:none; background:#28a745; color:white; padding:25px; border-radius:20px; text-align:center; font-weight:800;">REZERWACJA ZAPISANA!<br><small>Sprawdź maila.</small></div>
             <div id="formContainer">
                 <h2 id="modalTitle" style="color:#fff; margin-top:0;">Rezerwacja</h2>
                 <form id="resForm">
                     <input type="hidden" id="gameTitle">
-                    <input type="text" id="custName" placeholder="Imię i Nazwisko" required>
-                    <input type="tel" id="custPhone" placeholder="Numer telefonu" required>
-                    <input type="email" id="custEmail" placeholder="Adres e-mail" required>
+                    <input type="text" id="custName" placeholder="Imię i Nazwisko" required minlength="3" maxlength="100" autocomplete="name">
+                    <input type="tel" id="custPhone" placeholder="Numer telefonu" required pattern="[0-9+\s\-]{7,20}" autocomplete="tel">
+                    <input type="email" id="custEmail" placeholder="Adres e-mail" required maxlength="254" autocomplete="email">
                     <p id="captchaQuestion" style="font-size:0.8rem; color:var(--primary); margin:15px 0 5px; font-weight:700;"></p>
-                    <input type="number" id="humanVerify" placeholder="Twój wynik" required>
+                    <input type="number" id="humanVerify" placeholder="Twój wynik" required min="0" max="100">
                     <div style="margin: 15px 0; font-size: 0.8rem; color: #bbb; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
                         <input type="checkbox" id="privacyCheck" style="width: 18px; height: 18px; margin:0; cursor: pointer;" required>
-                        <label for="privacyCheck">Zapoznałem się z <a href="https://playandgo.pl/polityka-prywatnosci" target="_blank" style="color: var(--primary); text-decoration: none;">Polityką Prywatności</a></label>
+                        <label for="privacyCheck">Zapoznałem się z <a href="https://playandgo.pl/polityka-prywatnosci" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none;">Polityką Prywatności</a></label>
                     </div>
                     <button type="submit" id="submitBtn" class="btn">POTWIERDZAM REZERWACJĘ</button>
                 </form>
@@ -115,28 +154,79 @@
     </footer>
 
     <script>
-        const URL = 'https://script.google.com/macros/s/AKfycbw1r68KDSbcKhTtqihCdc0qIbZX4Wh46Eo9ZGg9K3i1LdH9sKUAp47xH59HswRnfSTZpA/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbw1r68KDSbcKhTtqihCdc0qIbZX4Wh46Eo9ZGg9K3i1LdH9sKUAp47xH59HswRnfSTZpA/exec';
         
         let correctCaptchaAnswer = 0;
         let modalOpenTime = 0;
 
+        // Sanityzacja tekstu — zapobiega XSS przy wstawianiu do innerHTML
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#x27;');
+        }
+
+        // Sanityzacja URL dla background-image (blokuje javascript: i data:)
+        function sanitizeUrl(url) {
+            if (!url) return '';
+            const trimmed = String(url).trim();
+            if (/^(https?:\/\/)/i.test(trimmed)) return trimmed;
+            return '';
+        }
+
         async function loadData() {
             try {
-                const res = await fetch(URL);
+                const res = await fetch(API_URL);
                 const data = await res.json();
                 
                 if (data.settings) {
-                    if (data.settings.TloStronyURL) document.body.style.backgroundImage = `url('${data.settings.TloStronyURL}')`;
-                    if (data.settings.Licznik) document.getElementById('visitor-count').innerText = data.settings.Licznik;
+                    const bgUrl = sanitizeUrl(data.settings.TloStronyURL);
+                    if (bgUrl) document.body.style.backgroundImage = `url('${bgUrl}')`;
+                    if (data.settings.Licznik) {
+                        document.getElementById('visitor-count').textContent = escapeHtml(data.settings.Licznik);
+                    }
                 }
 
                 document.getElementById('loader').style.display = 'none';
                 const grid = document.getElementById('games-grid');
                 grid.innerHTML = '';
 
+                if (!Array.isArray(data.games) || data.games.length === 0) {
+                    grid.innerHTML = '<p style="text-align:center; color:#aaa;">Brak dostępnych ofert.</p>';
+                    return;
+                }
+
+                // Struktura arkusza (zakładka Gry):
+                // Kolumna H = "Historia": TRUE dla gier w karuzeli, puste dla rezerwacji i bannera.
+                // Banner = ostatni wiersz bez Historia=TRUE.
+                // Gry historyczne = wiersze z Historia=TRUE → trafiają do karuzeli.
+
+                let bannerIndex = -1;
+                let historyStartIndex = data.games.length; // domyślnie brak historii
+
+                for (let i = 0; i < data.games.length; i++) {
+                    const h = data.games[i].Historia;
+                    if (h === true || h === 'TRUE' || h === 'true' || h === 1) {
+                        historyStartIndex = i;
+                        break;
+                    }
+                }
+                // Banner to ostatni wiersz PRZED historią
+                bannerIndex = historyStartIndex - 1;
+
                 for (let i = 0; i < data.games.length; i++) {
                     const game = data.games[i];
-                    const opisGry = game.Opis || "";
+
+                    // Sanityzacja wszystkich danych z API
+                    const tytul      = escapeHtml(game.Tytul);
+                    const platforma  = escapeHtml(game.Platforma);
+                    const cena       = escapeHtml(game.Cena);
+                    const opisGry    = escapeHtml(game.Opis || '');
+                    const okladkaURL = sanitizeUrl(game.OkladkaURL);
                     
                     let dataTekst = "Wkrótce";
                     let countdownTekst = "";
@@ -150,96 +240,214 @@
                         else countdownTekst = "Dostępna w ofercie!";
                     }
 
-                    let zarezerwowane = game.Zajete || 0; 
-                    let calyNaklad = game.Limit || (game.Dostepne + zarezerwowane) || 1; 
+                    let zarezerwowane = parseInt(game.Zajete) || 0;
+                    let calyNaklad = parseInt(game.Limit) || ((parseInt(game.Dostepne) || 0) + zarezerwowane) || 1;
                     let procent = Math.round((zarezerwowane / calyNaklad) * 100);
                     if (procent === 0 && game.Dostepne > 0) procent = 3;
                     if (procent > 98 && game.Dostepne > 0) procent = 98;
 
-                    // OSTATNIA POZYCJA (BANNER INFORMACYJNY) - PRZYWRÓCONY ORYGINAŁ
-                    if (i === data.games.length - 1) {
+                    // BANNER
+                    if (i === bannerIndex) {
                         const banner = document.createElement('div');
                         banner.className = 'featured-banner';
-                        banner.style.backgroundImage = `url('${game.OkladkaURL}')`;
+                        if (okladkaURL) banner.style.backgroundImage = `url('${okladkaURL}')`;
                         banner.innerHTML = `
                             <div class="banner-overlay">
                                 <span style="background:#ff0000; color:#fff; padding:5px 15px; border-radius:5px; font-size:0.9rem; font-weight:800; align-self:center; margin-bottom:15px;">
-                                    ${game.Platforma} - POLECANE
+                                    ${platforma} - POLECANE
                                 </span>
-                                <div class="title">${game.Tytul}</div>
+                                <div class="title">${tytul}</div>
                                 <div style="font-size: 1.4rem; color: #fff; margin: 10px auto 15px; font-weight: 400; max-width: 90%; line-height: 1.4; text-shadow: 1px 1px 5px #000;">
                                     ${opisGry}
                                 </div>
                                 <div style="font-size:1.1rem; opacity:0.9; margin-top: auto;">
-                                    📅 Premiera: <strong>${dataTekst}</strong> | ⏳ ${countdownTekst}
+                                    📅 Premiera: <strong>${escapeHtml(dataTekst)}</strong> | ⏳ ${countdownTekst}
                                 </div>
-                                <div class="banner-price">${game.Cena} zł</div>
+                                <div class="banner-price">${cena} zł</div>
                             </div>
                         `;
                         grid.appendChild(banner);
                     } 
                     else {
-                        // ZWYKŁE KAFELKI (POMNIEJSZONE)
+                        // KAFELKI HISTORYCZNE — karuzela
+                        if (i >= historyStartIndex) {
+                            const track = document.getElementById('carousel-track');
+                            const hcard = document.createElement('div');
+                            hcard.className = 'history-card';
+
+                            const himg = document.createElement('img');
+                            himg.className = 'card-img';
+                            himg.alt = tytul;
+                            himg.src = okladkaURL || '';
+                            himg.onerror = function() { this.style.display = 'none'; };
+
+                            const hbody = document.createElement('div');
+                            hbody.className = 'card-body';
+                            hbody.innerHTML = `
+                                <span style="background:var(--primary); color:#fff; padding:2px 6px; border-radius:4px; font-size:0.6rem; font-weight:800; align-self:flex-start; margin-bottom:4px;">${platforma}</span>
+                                <div class="title">${tytul}</div>
+                                <div class="card-description">${opisGry}</div>
+                                <div class="history-date">Premiera: ${escapeHtml(dataTekst)}</div>
+                                <div class="price">${cena} zł</div>
+                            `;
+
+                            hcard.appendChild(himg);
+                            hcard.appendChild(hbody);
+                            track.appendChild(hcard);
+
+                            document.getElementById('history-section').style.display = 'block';
+                        }
+                        else {
+                        // ZWYKŁE KAFELKI
                         const card = document.createElement('div');
                         card.className = 'game-card';
-                        let isAvailable = (game.Dostepne > 0);
-                        let buttonHtml = isAvailable 
-                            ? `<button class="btn" onclick="openModal('${game.Tytul} (${game.Platforma})')">ZAREZERWUJ</button>`
-                            : `<button class="btn" style="background:#555;" disabled>BRAK</button>`;
+                        let isAvailable = (parseInt(game.Dostepne) > 0);
+                        
+                        const img = document.createElement('img');
+                        img.className = 'card-img';
+                        img.alt = tytul;
+                        img.src = okladkaURL || '';
+                        img.onerror = function() { this.style.display = 'none'; };
 
-                        card.innerHTML = `
-                            <img src="${game.OkladkaURL}" class="card-img" onerror="this.src='https://via.placeholder.com/400x600'">
-                            <div class="card-body">
-                                <span style="background:var(--primary); color:#fff; padding:3px 8px; border-radius:5px; font-size:0.65rem; font-weight:800; align-self:flex-start; margin-bottom:5px;">${game.Platforma}</span>
-                                <div class="title">${game.Tytul}</div>
-                                <div class="card-description">${opisGry}</div>
-                                <div style="font-size:0.75rem; opacity:0.8;">Premiera: ${dataTekst}</div>
-                                <div class="price">${game.Cena} zł</div>
-                                
-                                <div style="width: 100%; margin: 5px 0;">
-                                    <div class="progress-text">${procent}% zajęte</div>
-                                    <div class="progress-container"><div class="progress-bar" style="width: ${procent}%"></div></div>
-                                </div>
-                                ${buttonHtml}
+                        const body = document.createElement('div');
+                        body.className = 'card-body';
+                        body.innerHTML = `
+                            <span style="background:var(--primary); color:#fff; padding:3px 8px; border-radius:5px; font-size:0.65rem; font-weight:800; align-self:flex-start; margin-bottom:5px;">${platforma}</span>
+                            <div class="title">${tytul}</div>
+                            <div class="card-description">${opisGry}</div>
+                            <div style="font-size:0.75rem; opacity:0.8;">Premiera: ${escapeHtml(dataTekst)}</div>
+                            <div class="price">${cena} zł</div>
+                            <div style="width: 100%; margin: 5px 0;">
+                                <div class="progress-text">${procent}% zajęte</div>
+                                <div class="progress-container"><div class="progress-bar" style="width: ${procent}%"></div></div>
                             </div>
                         `;
+
+                        if (isAvailable) {
+                            const btn = document.createElement('button');
+                            btn.className = 'btn';
+                            btn.textContent = 'ZAREZERWUJ';
+                            // Bezpieczne przypisanie — bez onclick z interpolacją
+                            btn.addEventListener('click', function() {
+                                openModal(game.Tytul + ' (' + game.Platforma + ')');
+                            });
+                            body.appendChild(btn);
+                        } else {
+                            const btn = document.createElement('button');
+                            btn.className = 'btn';
+                            btn.style.background = '#555';
+                            btn.textContent = 'BRAK';
+                            btn.disabled = true;
+                            body.appendChild(btn);
+                        }
+
+                        card.appendChild(img);
+                        card.appendChild(body);
                         grid.appendChild(card);
-                    }
-                }
-            } catch (e) { document.getElementById('loader').innerText = "Błąd połączenia."; }
+                        } // koniec else (zwykłe kafelki)
+                    } // koniec else (nie-banner)
+                } // koniec pętli
+            } catch (e) {
+                console.error('Błąd ładowania danych:', e);
+                document.getElementById('loader').textContent = "Błąd połączenia.";
+            }
         }
 
         function openModal(t) {
             const n1 = Math.floor(Math.random() * 15) + 5;
             const n2 = Math.floor(Math.random() * 10) + 2;
             correctCaptchaAnswer = n1 + n2;
-            document.getElementById('captchaQuestion').innerText = `ANTY-BOT: Ile to jest ${n1} + ${n2}?`;
-            document.getElementById('modalTitle').innerText = t;
+            document.getElementById('captchaQuestion').textContent = `ANTY-BOT: Ile to jest ${n1} + ${n2}?`;
+            document.getElementById('modalTitle').textContent = t;
             document.getElementById('gameTitle').value = t;
+            document.getElementById('humanVerify').value = '';
             document.getElementById('resModal').style.display = 'block';
             modalOpenTime = Date.now();
         }
 
-        function closeModal() { document.getElementById('resModal').style.display = 'none'; }
+        function closeModal() {
+            document.getElementById('resModal').style.display = 'none';
+            document.getElementById('formContainer').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('resForm').reset();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = false;
+            btn.textContent = 'POTWIERDZAM REZERWACJĘ';
+        }
+
+        // Zamknięcie modalu po kliknięciu w tło
+        document.getElementById('resModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
 
         document.getElementById('resForm').onsubmit = async (e) => {
             e.preventDefault();
-            if (parseInt(document.getElementById('humanVerify').value) !== correctCaptchaAnswer) { alert("Błędny wynik!"); return; }
+
+            // Sprawdzenie CAPTCHA
+            if (parseInt(document.getElementById('humanVerify').value) !== correctCaptchaAnswer) {
+                alert("Błędny wynik!");
+                return;
+            }
+
+            // Sprawdzenie czasu wypełnienia (min. 3 sekundy — ochrona przed botami)
+            if (Date.now() - modalOpenTime < 3000) {
+                alert("Proszę chwilę poczekać przed wysłaniem.");
+                return;
+            }
+
             const btn = document.getElementById('submitBtn');
-            btn.disabled = true; btn.innerText = "PRZETWARZANIE...";
-            const p = new URLSearchParams({
-                tytul: document.getElementById('gameTitle').value,
-                imie: document.getElementById('custName').value,
+            btn.disabled = true;
+            btn.textContent = 'PRZETWARZANIE...';
+
+            const params = new URLSearchParams({
+                tytul:   document.getElementById('gameTitle').value,
+                imie:    document.getElementById('custName').value,
                 telefon: document.getElementById('custPhone').value,
-                email: document.getElementById('custEmail').value
+                email:   document.getElementById('custEmail').value
             });
+
             try {
-                await fetch(URL + '?' + p.toString(), { mode: 'no-cors' });
+                await fetch(API_URL + '?' + params.toString(), { mode: 'no-cors' });
                 document.getElementById('formContainer').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
                 setTimeout(() => { closeModal(); location.reload(); }, 2500);
-            } catch (err) { alert('Błąd połączenia.'); btn.disabled = false; }
+            } catch (err) {
+                console.error('Błąd wysyłania:', err);
+                alert('Błąd połączenia. Spróbuj ponownie.');
+                btn.disabled = false;
+                btn.textContent = 'POTWIERDZAM REZERWACJĘ';
+            }
         };
+
+        // Dźwięk kliknięcia karuzeli
+        function playClick() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1200, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.08);
+            } catch(e) {}
+        }
+
+        // Przyciski karuzeli
+        document.getElementById('carousel-prev').addEventListener('click', function() {
+            playClick();
+            const track = document.getElementById('carousel-track');
+            track.scrollBy({ left: -480, behavior: 'smooth' });
+        });
+        document.getElementById('carousel-next').addEventListener('click', function() {
+            playClick();
+            const track = document.getElementById('carousel-track');
+            track.scrollBy({ left: 480, behavior: 'smooth' });
+        });
 
         loadData();
     </script>
